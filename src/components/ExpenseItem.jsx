@@ -1,10 +1,10 @@
 function ExpenseItem({ expense }) {
   return (
-    <div className="flex items-center justify-between py-4 border-b last:border-none hover:bg-gray-50 transition px-2 rounded-xl">
+    <div className="flex items-center justify-between py-4 border-b last:border-none hover:bg-emerald-50/40 transition px-2 rounded-xl">
 
       <div className="flex items-center gap-4">
 
-        <div className="w-11 h-11 rounded-full bg-gray-100 flex items-center justify-center font-semibold text-gray-700">
+        <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center font-semibold text-gray-700">
           {expense.avatar}
         </div>
 

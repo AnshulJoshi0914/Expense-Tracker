@@ -11,12 +11,12 @@ function StatCard({
     <div
       className="
         bg-white
-        rounded-3xl
+       rounded-[26px]
         p-6
         shadow-sm
         border
         border-gray-100
-        hover:shadow-lg
+        hover:-translate-y-1 hover:shadow-xl
         transition-all
         duration-300
       "
@@ -29,7 +29,7 @@ function StatCard({
             {title}
           </p>
 
-          <h2 className="text-3xl font-bold mt-2 text-gray-800">
+          <h2 className="text-4xl font-bold mt-2 text-gray-800">
             {value}
           </h2>
 
@@ -49,7 +49,7 @@ function StatCard({
 
         </div>
 
-        <div className="h-12 w-12 rounded-2xl bg-emerald-50 flex items-center justify-center">
+        <div className="h-12 w-12 rounded-[26px] bg-emerald-50 flex items-center justify-center">
 
           <Icon
             size={22}

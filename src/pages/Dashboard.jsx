@@ -1,12 +1,9 @@
-import {
-  Wallet,
-  PiggyBank,
-  DollarSign,
-  CalendarDays,
-} from "lucide-react";
+import { Wallet, PiggyBank, DollarSign, CalendarDays } from "lucide-react";
 
 import StatCard from "../components/StatCard";
 import ExpenseTable from "../components/ExpenseTable";
+import Analytics from "../components/Analytics";
+import DailyChart from "../components/DailyChart";
 
 function Dashboard() {
   const stats = [
@@ -42,40 +39,23 @@ function Dashboard() {
 
   return (
     <div className="space-y-8">
-
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
-
         {stats.map((item) => (
-          <StatCard
-            key={item.title}
-            {...item}
-          />
+          <StatCard key={item.title} {...item} />
         ))}
-
       </div>
 
       <div className="grid xl:grid-cols-3 gap-6">
-
         <div className="xl:col-span-2">
-
           <ExpenseTable />
-
         </div>
 
-        <div>
+        <div className="space-y-6">
+          <Analytics />
 
-          <div className="bg-white rounded-3xl h-full flex items-center justify-center shadow-sm border border-gray-100">
-
-            <p className="text-gray-400 text-lg">
-              Analytics Coming Next →
-            </p>
-
-          </div>
-
+          <DailyChart />
         </div>
-
       </div>
-
     </div>
   );
 }
