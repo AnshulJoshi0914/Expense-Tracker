@@ -59,7 +59,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
         h-screen
 
-        w-72
+        w-80
 
         bg-[#0A3023]
 
@@ -69,7 +69,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
         flex-col
 
-        p-6
+        px-7 py-8
 
         shadow-2xl
 
