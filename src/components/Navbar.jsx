@@ -2,8 +2,8 @@ import { Bell, Menu, Plus, Search } from "lucide-react";
 
 function Navbar({ setSidebarOpen }) {
   return (
-    <header className="sticky top-0 z-20 bg-[#F6F7F5] px-6 py-5">
-      <div className="bg-white rounded-3xl shadow-sm px-6 py-4 flex justify-between items-center">
+    <header className="bg-[#F6F7F5] px-8 pt-6">
+       <div className="bg-white rounded-[28px] shadow-md px-6 py-4 flex items-center justify-between">
         <div className="flex items-center justify-between gap-5">
           {/* Left */}
           <div className="flex items-center gap-4">

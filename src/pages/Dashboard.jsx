@@ -39,13 +39,13 @@ function Dashboard() {
 
   return (
     <div className="space-y-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-7">
         {stats.map((item) => (
           <StatCard key={item.title} {...item} />
         ))}
       </div>
 
-      <div className="grid xl:grid-cols-3 gap-6">
+      <div className="grid xl:grid-cols-3 gap-7">
         <div className="xl:col-span-2">
           <ExpenseTable />
         </div>
