@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import DashboardLayout from "./layouts/DashboardLayout";
-
+import Support from "./pages/Support";
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
 import Budgets from "./pages/Budgets";
@@ -30,7 +30,7 @@ function App() {
           <Route path="/categories" element={<Categories />} />
 
           <Route path="/settings" element={<Settings />} />
-
+           <Route path="/support" element={<Support />} />
         </Route>
 
       </Routes>
