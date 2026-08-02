@@ -51,11 +51,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
       <aside
         className={`
 
-        fixed md:static
+        fixed md:sticky md:top-0
 
         z-40
 
-        h-screen
+        h-dvh
 
         w-72.5
 
