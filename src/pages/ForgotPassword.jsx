@@ -1,105 +1,3 @@
-// import { Mail, ArrowLeft, Send, Wallet } from "lucide-react";
-// import { Link } from "react-router-dom";
-// import { useState } from "react";
-
-// function ForgotPassword() {
-//   const [email, setEmail] = useState("");
-
-//   function handleSubmit(e) {
-//     e.preventDefault();
-//     console.log(email);
-//   }
-
-//   return (
-//     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 flex items-center justify-center p-8">
-
-//       <div className="w-full max-w-md rounded-[36px] bg-white p-10 shadow-[0_25px_70px_rgba(0,0,0,.25)]">
-
-//         <div className="flex items-center gap-4 mb-8">
-
-//           <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white">
-
-//             <Wallet size={26} />
-
-//           </div>
-
-//           <div>
-
-//             <h2 className="text-2xl font-bold text-slate-800">
-//               Forgot Password
-//             </h2>
-
-//             <p className="text-slate-500 text-sm">
-//               We'll send a reset link.
-//             </p>
-
-//           </div>
-
-//         </div>
-
-//         <form
-//           onSubmit={handleSubmit}
-//           className="space-y-6"
-//         >
-
-//           <div>
-
-//             <label className="text-sm font-medium text-slate-600">
-//               Email Address
-//             </label>
-
-//             <div className="relative mt-2">
-
-//               <Mail
-//                 size={18}
-//                 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-//               />
-
-//               <input
-//                 type="email"
-//                 value={email}
-//                 onChange={(e) => setEmail(e.target.value)}
-//                 placeholder="Enter your email"
-//                 className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-4 pl-12 pr-4 outline-none transition focus:border-emerald-500 focus:bg-white"
-//                 required
-//               />
-
-//             </div>
-
-//           </div>
-
-//           <button
-//             type="submit"
-//             className="w-full rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 py-4 text-white font-semibold flex items-center justify-center gap-3 hover:scale-[1.02] transition"
-//           >
-
-//             <Send size={18} />
-
-//             Send Reset Link
-
-//           </button>
-
-//         </form>
-
-//         <Link
-//           to="/"
-//           className="mt-8 flex items-center justify-center gap-2 text-emerald-600 hover:text-emerald-700 font-medium"
-//         >
-
-//           <ArrowLeft size={18} />
-
-//           Back to Login
-
-//         </Link>
-
-//       </div>
-
-//     </div>
-//   );
-// }
-
-// export default ForgotPassword;
-
 import { useState } from "react";
 import {
   Wallet,
@@ -226,9 +124,9 @@ function ForgotPassword() {
 
         <div className="flex w-full justify-center lg:w-[42%]">
 
-          <div className="w-full max-w-lg rounded-[38px] border border-white/20 bg-white p-10 shadow-[0_35px_80px_rgba(0,0,0,.35)]">
+          <div className="w-full max-w-xl rounded-[38px] border border-white/20 bg-white p-10 shadow-[0_35px_80px_rgba(0,0,0,.35)] dark:border-slate-700 dark:bg-slate-900">
 
-            <span className="rounded-full bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-700">
+            <span className="bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-700">
 
               Password Recovery 🔐
 
@@ -247,51 +145,45 @@ function ForgotPassword() {
             </p>
 
             <form
-              onSubmit={handleSubmit}
-              className="mt-10 space-y-7"
-            ><div>
+  onSubmit={handleSubmit}
+  className="mt-10 space-y-7"
+>
+  <div>
 
-  <label className="mb-2 block text-sm font-semibold text-slate-700">
+    <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
+      Email Address
+    </label>
 
-    Email Address
+    <div className="relative">
 
-  </label>
+    
 
-  <div className="relative">
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="john@example.com"
+        className="w-full rounded-xl border border-slate-200 bg-slate-50 py-4 pl-14 pr-5 text-[15px] outline-none transition-all duration-300 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-100 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500 dark:focus:bg-slate-800 dark:focus:ring-emerald-900/40"
+        required
+      />
 
-    <Mail
-      size={20}
-      className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"
-    />
-
-    <input
-      type="email"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-      placeholder="john@example.com"
-      className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-4 pl-14 pr-5 text-[15px] outline-none transition-all duration-300 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-100"
-      required
-    />
+    </div>
 
   </div>
-
-</div>
 
 <button
   type="submit"
   className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-500 py-4 text-lg font-bold text-white shadow-[0_20px_45px_rgba(16,185,129,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_60px_rgba(16,185,129,.45)]"
 >
-
   Send Reset Link
 
   <ArrowRight
     size={20}
     className="transition-transform duration-300 group-hover:translate-x-1"
   />
-
 </button>
 
-<div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-5">
+<div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-5 dark:border-emerald-900/40 dark:bg-emerald-900/20">
 
   <div className="flex items-start gap-4">
 
@@ -303,15 +195,17 @@ function ForgotPassword() {
 
     <div>
 
-      <h3 className="font-semibold text-slate-800">
+      <h3 className="font-semibold text-slate-800 dark:text-white">
 
         Secure Password Reset
 
       </h3>
 
-      <p className="mt-2 text-sm leading-6 text-slate-500">
+      <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">
 
-        We'll send a secure password reset link to your registered email address. The link expires after a limited time for your security.
+        We'll send a secure password reset link to your registered email
+        address. The link expires automatically after a short time for your
+        security.
 
       </p>
 
@@ -323,9 +217,9 @@ function ForgotPassword() {
 
 </form>
 
-<div className="mt-10 border-t border-slate-200 pt-8">
+<div className="mt-10 border-t border-slate-200 pt-8 dark:border-slate-700">
 
-  <p className="text-center text-slate-500">
+  <p className="text-center text-slate-500 dark:text-slate-400">
 
     Remember your password?
 
@@ -333,7 +227,7 @@ function ForgotPassword() {
 
   <Link
     to="/login"
-    className="mt-5 flex w-full items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 py-4 font-semibold text-slate-700 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700"
+    className="mt-5 flex w-full items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 py-4 font-semibold text-slate-700 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
   >
 
     Back to Login
@@ -342,34 +236,30 @@ function ForgotPassword() {
 
 </div>
 
-<div className="mt-8 flex items-center justify-center gap-8 border-t border-slate-100 pt-6 text-sm text-slate-400">
+<div className="mt-8 flex items-center justify-center gap-8 border-t border-slate-100 pt-6 text-sm text-slate-400 dark:border-slate-700 dark:text-slate-500">
 
   <span className="flex items-center gap-2">
-
     🔒 Secure
-
   </span>
 
   <span className="flex items-center gap-2">
-
     ⚡ Fast
-
   </span>
 
   <span className="flex items-center gap-2">
-
     📧 Instant Email
-
   </span>
 
 </div>
 
-</div>
+          </div>
 
-</div>
+        </div>
 
-</div>
-</div>);
+      </div>
+
+    </div>
+  );
 }
 
 export default ForgotPassword;

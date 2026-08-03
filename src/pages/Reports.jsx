@@ -47,21 +47,21 @@ function Reports() {
   return (
     <div className="space-y-8">
       <div className="rounded-[10px] bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-8 text-white shadow-[0_20px_50px_rgba(15,23,42,.18)]">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
+        <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
           <div>
-            <p className="uppercase tracking-[0.3em] text-sm text-slate-300">
+            <p className="text-sm uppercase tracking-[0.3em] text-slate-300">
               Financial Reports
             </p>
 
-            <h1 className="text-4xl font-bold mt-3">Business Insights 📊</h1>
+            <h1 className="mt-3 text-4xl font-bold">Business Insights 📊</h1>
 
-            <p className="mt-3 max-w-xl text-slate-300 leading-7">
+            <p className="mt-3 max-w-xl leading-7 text-slate-300">
               Visualize your income, expenses, savings and spending trends with
               interactive analytics.
             </p>
           </div>
 
-          <button className="group rounded-2xl bg-white text-slate-900 px-6 py-4 font-semibold flex items-center gap-3 hover:shadow-xl transition">
+          <button className="group flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-slate-900 transition hover:shadow-xl dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700">
             Export PDF
             <ArrowRight
               size={18}
@@ -70,111 +70,131 @@ function Reports() {
           </button>
         </div>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-7">
-        <div className="group relative overflow-hidden rounded-[10px] border border-slate-200 bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,.06)]">
-          <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-emerald-50"></div>
+      <div className="grid grid-cols-1 gap-7 md:grid-cols-2 xl:grid-cols-4">
+        <div className="group relative overflow-hidden rounded-[10px] border border-slate-200 bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-none">
+          <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-emerald-50 dark:bg-emerald-900/20" />
 
           <div className="relative flex justify-between">
             <div>
-              <p className="uppercase tracking-[0.25em] text-xs text-slate-400">
+              <p className="text-xs uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500">
                 Income
               </p>
 
-              <h2 className="mt-4 text-4xl font-bold">₹4,18,000</h2>
+              <h2 className="mt-4 text-4xl font-bold text-slate-800 dark:text-white">
+                ₹4,18,000
+              </h2>
             </div>
 
-            <div className="h-16 w-16 rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white">
+            <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white">
               <TrendingUp size={30} />
             </div>
           </div>
         </div>
 
-        <div className="group relative overflow-hidden rounded-[10px] border border-slate-200 bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,.06)]">
-          <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-rose-50"></div>
+        <div className="group relative overflow-hidden rounded-[10px] border border-slate-200 bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-none">
+          <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-rose-50 dark:bg-rose-900/20" />
 
           <div className="relative flex justify-between">
             <div>
-              <p className="uppercase tracking-[0.25em] text-xs text-slate-400">
+              <p className="text-xs uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500">
                 Expense
               </p>
 
-              <h2 className="mt-4 text-4xl font-bold">₹2,45,000</h2>
+              <h2 className="mt-4 text-4xl font-bold text-slate-800 dark:text-white">
+                ₹2,45,000
+              </h2>
             </div>
 
-            <div className="h-16 w-16 rounded-3xl bg-gradient-to-br from-rose-500 to-red-500 flex items-center justify-center text-white">
+            <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-rose-500 to-red-500 text-white">
               <TrendingDown size={30} />
             </div>
           </div>
         </div>
 
-        <div className="group relative overflow-hidden rounded-[10px] border border-slate-200 bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,.06)]">
-          <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-sky-50"></div>
+        <div className="group relative overflow-hidden rounded-[10px] border border-slate-200 bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-none">
+          <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-sky-50 dark:bg-sky-900/20" />
 
           <div className="relative flex justify-between">
             <div>
-              <p className="uppercase tracking-[0.25em] text-xs text-slate-400">
+              <p className="text-xs uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500">
                 Savings
               </p>
 
-              <h2 className="mt-4 text-4xl font-bold">₹1,73,000</h2>
+              <h2 className="mt-4 text-4xl font-bold text-slate-800 dark:text-white">
+                ₹1,73,000
+              </h2>
             </div>
 
-            <div className="h-16 w-16 rounded-3xl bg-gradient-to-br from-sky-500 to-indigo-500 flex items-center justify-center text-white">
+            <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-sky-500 to-indigo-500 text-white">
               <Wallet size={30} />
             </div>
           </div>
         </div>
 
-        <div className="group relative overflow-hidden rounded-[10px] border border-slate-200 bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,.06)]">
-          <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-amber-50"></div>
+        <div className="group relative overflow-hidden rounded-[10px] border border-slate-200 bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-none">
+          <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-amber-50 dark:bg-amber-900/20" />
 
           <div className="relative flex justify-between">
             <div>
-              <p className="uppercase tracking-[0.25em] text-xs text-slate-400">
+              <p className="text-xs uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500">
                 Cash Flow
               </p>
 
-              <h2 className="mt-4 text-4xl font-bold">+₹54,000</h2>
+              <h2 className="mt-4 text-4xl font-bold text-slate-800 dark:text-white">
+                +₹54,000
+              </h2>
             </div>
 
-            <div className="h-16 w-16 rounded-3xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white">
+            <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-amber-500 to-orange-500 text-white">
               <IndianRupee size={30} />
             </div>
           </div>
         </div>
       </div>
-
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-7">
-        <div className="rounded-[10px] border border-slate-200 bg-white p-7 shadow-[0_12px_40px_rgba(15,23,42,.06)]">
+      <div className="grid grid-cols-1 gap-7 xl:grid-cols-2">
+        <div className="rounded-[10px] border border-slate-200 bg-white p-7 shadow-[0_12px_40px_rgba(15,23,42,.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-none">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-slate-800">
+            <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
               Monthly Expense Trend
             </h2>
 
-            <p className="mt-1 text-slate-500">
+            <p className="mt-1 text-slate-500 dark:text-slate-400">
               Expense growth over the last 7 months
             </p>
           </div>
 
           <ResponsiveContainer width="100%" height={320}>
             <LineChart data={monthlyExpenses}>
-              <CartesianGrid strokeDasharray="4 4" stroke="#E2E8F0" />
+              <CartesianGrid strokeDasharray="4 4" stroke="#334155" />
 
               <XAxis
                 dataKey="month"
-                tick={{ fill: "#64748B" }}
+                tick={{
+                  fill: "#94A3B8",
+                }}
                 axisLine={false}
                 tickLine={false}
               />
 
               <YAxis
-                tick={{ fill: "#64748B" }}
+                tick={{
+                  fill: "#94A3B8",
+                }}
                 axisLine={false}
                 tickLine={false}
               />
 
-              <Tooltip />
+              <Tooltip
+                contentStyle={{
+                  background: "#0F172A",
+                  border: "1px solid #334155",
+                  borderRadius: "16px",
+                  color: "#fff",
+                }}
+                labelStyle={{
+                  color: "#CBD5E1",
+                }}
+              />
 
               <Line
                 type="monotone"
@@ -190,35 +210,55 @@ function Reports() {
           </ResponsiveContainer>
         </div>
 
-        <div className="rounded-[32px] border border-slate-200 bg-white p-7 shadow-[0_12px_40px_rgba(15,23,42,.06)]">
+        <div className="rounded-[32px] border border-slate-200 bg-white p-7 shadow-[0_12px_40px_rgba(15,23,42,.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-none">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-slate-800">
+            <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
               Income vs Expense
             </h2>
 
-            <p className="mt-1 text-slate-500">Compare monthly cash flow</p>
+            <p className="mt-1 text-slate-500 dark:text-slate-400">
+              Compare monthly cash flow
+            </p>
           </div>
 
           <ResponsiveContainer width="100%" height={320}>
             <BarChart data={monthlyExpenses}>
-              <CartesianGrid strokeDasharray="4 4" stroke="#E2E8F0" />
+              <CartesianGrid strokeDasharray="4 4" stroke="#334155" />
 
               <XAxis
                 dataKey="month"
-                tick={{ fill: "#64748B" }}
+                tick={{
+                  fill: "#94A3B8",
+                }}
                 axisLine={false}
                 tickLine={false}
               />
 
               <YAxis
-                tick={{ fill: "#64748B" }}
+                tick={{
+                  fill: "#94A3B8",
+                }}
                 axisLine={false}
                 tickLine={false}
               />
 
-              <Tooltip />
+              <Tooltip
+                contentStyle={{
+                  background: "#0F172A",
+                  border: "1px solid #334155",
+                  borderRadius: "16px",
+                  color: "#fff",
+                }}
+                labelStyle={{
+                  color: "#CBD5E1",
+                }}
+              />
 
-              <Legend />
+              <Legend
+                wrapperStyle={{
+                  color: "#CBD5E1",
+                }}
+              />
 
               <Bar dataKey="income" fill="#3B82F6" radius={[10, 10, 0, 0]} />
 
@@ -226,18 +266,19 @@ function Reports() {
             </BarChart>
           </ResponsiveContainer>
         </div>
-      </div>
-
-      <div className="rounded-[10px] border border-slate-200 bg-white p-7 shadow-[0_12px_40px_rgba(15,23,42,.06)]">
+      </div>{" "}
+      <div className="rounded-[10px] border border-slate-200 bg-white p-7 shadow-[0_12px_40px_rgba(15,23,42,.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-none">
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-slate-800">
+          <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
             Expense Distribution
           </h2>
 
-          <p className="mt-1 text-slate-500">Spending by category</p>
+          <p className="mt-1 text-slate-500 dark:text-slate-400">
+            Spending by category
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2">
           <ResponsiveContainer width="100%" height={360}>
             <PieChart>
               <Pie
@@ -253,7 +294,23 @@ function Reports() {
                 ))}
               </Pie>
 
-              <Tooltip />
+              <Tooltip
+                contentStyle={{
+                  background: "#0F172A",
+                  border: "1px solid #334155",
+                  borderRadius: "16px",
+                  color: "#fff",
+                }}
+                labelStyle={{
+                  color: "#CBD5E1",
+                }}
+              />
+
+              <Legend
+                wrapperStyle={{
+                  color: "#CBD5E1",
+                }}
+              />
             </PieChart>
           </ResponsiveContainer>
 
@@ -261,7 +318,7 @@ function Reports() {
             {categoryExpense.map((item, index) => (
               <div
                 key={item.name}
-                className="flex items-center justify-between rounded-2xl border border-slate-200 p-4 hover:bg-slate-50 transition"
+                className="flex items-center justify-between rounded-2xl border border-slate-200 p-4 transition hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800"
               >
                 <div className="flex items-center gap-4">
                   <div
@@ -271,12 +328,14 @@ function Reports() {
                     }}
                   />
 
-                  <span className="font-semibold text-slate-700">
+                  <span className="font-semibold text-slate-700 dark:text-slate-200">
                     {item.name}
                   </span>
                 </div>
 
-                <span className="font-bold text-slate-800">₹{item.value}</span>
+                <span className="font-bold text-slate-800 dark:text-white">
+                  ₹{item.value}
+                </span>
               </div>
             ))}
           </div>

@@ -10,7 +10,7 @@ function ExpenseTable() {
       payment: "Bank Transfer",
       category: "Housing",
       amount: "-$1,450.00",
-      color: "bg-emerald-100 text-emerald-700",
+      color: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ function ExpenseTable() {
       payment: "Visa ••4417",
       category: "Food",
       amount: "-$128.40",
-      color: "bg-cyan-100 text-cyan-700",
+      color: "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400",
     },
     {
       id: 3,
@@ -30,7 +30,7 @@ function ExpenseTable() {
       payment: "Visa ••4417",
       category: "Transport",
       amount: "-$76.00",
-      color: "bg-yellow-100 text-yellow-700",
+      color: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400",
     },
     {
       id: 4,
@@ -40,7 +40,7 @@ function ExpenseTable() {
       payment: "Auto Debit",
       category: "Utilities",
       amount: "-$94.20",
-      color: "bg-red-100 text-red-600",
+      color: "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400",
     },
     {
       id: 5,
@@ -50,28 +50,32 @@ function ExpenseTable() {
       payment: "Apple Pay",
       category: "Food",
       amount: "-$12.75",
-      color: "bg-cyan-100 text-cyan-700",
+      color: "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400",
     },
   ];
 
   return (
-    <div className="rounded-[10px] bg-white border border-slate-200 shadow-[0_12px_35px_rgba(15,23,42,0.06)] overflow-hidden">
+    <div className="overflow-hidden rounded-[10px] border border-slate-200 bg-white shadow-[0_12px_35px_rgba(15,23,42,0.06)] transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 dark:shadow-none">
 
-      <div className="flex items-center justify-between px-7 py-6 border-b border-slate-100">
+      <div className="flex items-center justify-between border-b border-slate-100 px-7 py-6 dark:border-slate-800">
 
         <div>
 
-          <h2 className="text-2xl font-bold tracking-tight text-slate-800">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-800 dark:text-white">
+
             Recent Expenses
+
           </h2>
 
-          <p className="text-slate-500 mt-1">
+          <p className="mt-1 text-slate-500 dark:text-slate-400">
+
             Your latest transactions
+
           </p>
 
         </div>
 
-        <button className="flex items-center gap-2 rounded-3xl border border-slate-200 bg-slate-50 px-5 py-3 font-medium text-slate-700 transition-all duration-300 hover:bg-white hover:shadow-md">
+        <button className="flex items-center gap-2 rounded-3xl border border-slate-200 bg-slate-50 px-5 py-3 font-medium text-slate-700 transition-all duration-300 hover:bg-white hover:shadow-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700">
 
           <Funnel size={18} />
 
@@ -87,7 +91,7 @@ function ExpenseTable() {
 
           <div
             key={expense.id}
-            className="flex items-center justify-between rounded-2xl p-4 transition-all duration-300 hover:bg-slate-50 hover:shadow-sm"
+            className="flex items-center justify-between rounded-2xl p-4 transition-all duration-300 hover:bg-slate-50 hover:shadow-sm dark:hover:bg-slate-800"
           >
 
             <div className="flex items-center gap-4">
@@ -100,13 +104,13 @@ function ExpenseTable() {
 
               <div>
 
-                <h3 className="font-semibold text-slate-800">
+                <h3 className="font-semibold text-slate-800 dark:text-white">
 
                   {expense.name}
 
                 </h3>
 
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
 
                   {expense.payment} • {expense.date}
 
@@ -124,7 +128,7 @@ function ExpenseTable() {
                 {expense.category}
               </span>
 
-              <span className="min-w-[90px] text-right text-lg font-bold text-slate-800">
+              <span className="min-w-[90px] text-right text-lg font-bold text-slate-800 dark:text-white">
 
                 {expense.amount}
 
@@ -138,9 +142,9 @@ function ExpenseTable() {
 
       </div>
 
-      <div className="border-t border-slate-100 px-7 py-5">
+      <div className="border-t border-slate-100 px-7 py-5 dark:border-slate-800">
 
-        <button className="group flex items-center gap-2 font-semibold text-emerald-600 transition-all hover:gap-3">
+        <button className="group flex items-center gap-2 font-semibold text-emerald-600 transition-all hover:gap-3 dark:text-emerald-400">
 
           View All Transactions
 

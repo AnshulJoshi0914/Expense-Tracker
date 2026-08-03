@@ -1,11 +1,7 @@
 import { useState } from "react";
 import {
-  User,
-  Mail,
-  Lock,
   Bell,
   Moon,
-  IndianRupee,
   Save,
 } from "lucide-react";
 import { useTheme } from "../context/ThemeProvider";
@@ -44,7 +40,7 @@ function Settings() {
 
       </div>
 
-      <div className="rounded-3xl border bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <div className="rounded-2xl border bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-900">
 
         <div className="grid gap-6 md:grid-cols-2">
 
@@ -58,10 +54,6 @@ function Settings() {
 
             <div className="relative mt-2">
 
-              <User
-                size={18}
-                className="absolute left-4 top-4 text-gray-400"
-              />
 
               <input
                 type="text"
@@ -85,11 +77,6 @@ function Settings() {
 
             <div className="relative mt-2">
 
-              <Mail
-                size={18}
-                className="absolute left-4 top-4 text-gray-400"
-              />
-
               <input
                 type="email"
                 name="email"
@@ -112,10 +99,8 @@ function Settings() {
 
             <div className="relative mt-2">
 
-              <Lock
-                size={18}
-                className="absolute left-4 top-4 text-gray-400"
-              />
+             
+      
 
               <input
                 type="password"
@@ -137,10 +122,7 @@ function Settings() {
 
             <div className="relative mt-2">
 
-              <IndianRupee
-                size={18}
-                className="absolute left-4 top-4 text-gray-400"
-              />
+    
 
               <select
                 name="currency"
@@ -161,7 +143,7 @@ function Settings() {
 
       </div>
 
-      <div className="space-y-6 rounded-3xl border bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <div className="space-y-6 rounded-2xl border bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-900">
 
         <h2 className="text-xl font-semibold">
 

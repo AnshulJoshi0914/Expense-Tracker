@@ -14,7 +14,7 @@ const links = [
   {
     name: "Dashboard",
     icon: LayoutDashboard,
-    path: "/",
+    path: "/dashboard",
   },
   {
     name: "Transactions",

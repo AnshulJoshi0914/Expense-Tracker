@@ -44,27 +44,27 @@ function Dashboard() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 transition-colors duration-300">
 
       <div className="rounded-[10px] bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 p-8 text-white shadow-[0_20px_50px_rgba(16,185,129,0.30)]">
 
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
+        <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
 
           <div>
 
-            <p className="text-emerald-100 text-sm uppercase tracking-[0.3em]">
+            <p className="text-sm uppercase tracking-[0.3em] text-emerald-100">
 
               Welcome Back
 
             </p>
 
-            <h1 className="text-4xl font-bold mt-3">
+            <h1 className="mt-3 text-4xl font-bold">
 
               Good Evening, Anshu 👋
 
             </h1>
 
-            <p className="mt-3 text-emerald-100 max-w-xl leading-7">
+            <p className="mt-3 max-w-xl leading-7 text-emerald-100">
 
               Track your expenses, monitor your budgets and gain
               insights into your financial health from one place.
@@ -73,7 +73,7 @@ function Dashboard() {
 
           </div>
 
-          <button className="group bg-white text-emerald-700 rounded-2xl px-6 py-4 font-semibold flex items-center gap-3 hover:shadow-xl transition-all duration-300">
+          <button className="group flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-emerald-700 transition-all duration-300 hover:shadow-xl">
 
             View Reports
 
@@ -88,7 +88,7 @@ function Dashboard() {
 
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-7">
+      <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 xl:grid-cols-4">
 
         {stats.map((item) => (
           <StatCard
@@ -107,7 +107,7 @@ function Dashboard() {
 
         </div>
 
-        <div className="col-span-12 xl:col-span-4 space-y-7">
+        <div className="col-span-12 space-y-7 xl:col-span-4">
 
           <Analytics />
 

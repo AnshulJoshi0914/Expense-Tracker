@@ -18,8 +18,8 @@ function App() {
 
     <BrowserRouter>
   <Routes>
-
     <Route path="/" element={<Login />} />
+    <Route path="/login" element={<Login />} />
 
     <Route path="/signup" element={<Signup />} />
 
@@ -43,6 +43,7 @@ function App() {
       <Route path="/settings" element={<Settings />} />
 
       <Route path="/support" element={<Support />} />
+      <Route path="/forgotpassowrd" element={<ForgotPassword/>}/>
 
     </Route>
 

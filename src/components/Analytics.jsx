@@ -38,7 +38,7 @@ function Analytics() {
   );
 
   return (
-    <div className="overflow-hidden rounded-[10px] border border-slate-200 bg-white shadow-[0_12px_35px_rgba(15,23,42,0.06)]">
+    <div className="overflow-hidden rounded-[10px] border border-slate-200 bg-white shadow-[0_12px_35px_rgba(15,23,42,0.06)] transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 dark:shadow-none">
 
       <div className="bg-gradient-to-r from-emerald-500 to-teal-500 p-6 text-white">
 
@@ -80,7 +80,7 @@ function Analytics() {
 
       <div className="p-6">
 
-        <div className="flex h-3 overflow-hidden rounded-full bg-slate-100">
+        <div className="flex h-3 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
 
           {categoryData.map((item) => (
             <div
@@ -112,7 +112,7 @@ function Analytics() {
                   }}
                 />
 
-                <span className="font-medium text-slate-700">
+                <span className="font-medium text-slate-700 dark:text-slate-200">
 
                   {item.name}
 
@@ -122,13 +122,13 @@ function Analytics() {
 
               <div className="text-right">
 
-                <p className="font-bold text-slate-800">
+                <p className="font-bold text-slate-800 dark:text-white">
 
                   ${item.value}
 
                 </p>
 
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-slate-400 dark:text-slate-500">
 
                   {(
                     (item.value / total) *

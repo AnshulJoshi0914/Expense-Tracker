@@ -16,28 +16,28 @@ function Transactions() {
       value: "$3,200",
       icon: ArrowUpCircle,
       color: "from-emerald-500 to-teal-500",
-      bg: "bg-emerald-50",
+      bg: "bg-emerald-50 dark:bg-emerald-900/20",
     },
     {
       title: "Expenses",
       value: "$420",
       icon: ArrowDownCircle,
       color: "from-rose-500 to-red-500",
-      bg: "bg-rose-50",
+      bg: "bg-rose-50 dark:bg-rose-900/20",
     },
     {
       title: "Pending",
       value: "2",
       icon: Clock4,
       color: "from-amber-500 to-orange-500",
-      bg: "bg-amber-50",
+      bg: "bg-amber-50 dark:bg-amber-900/20",
     },
     {
       title: "Balance",
       value: "$2,780",
       icon: Wallet,
       color: "from-sky-500 to-indigo-500",
-      bg: "bg-sky-50",
+      bg: "bg-sky-50 dark:bg-sky-900/20",
     },
   ];
 
@@ -155,7 +155,7 @@ function Transactions() {
             </p>
           </div>
 
-          <button className="group bg-white text-slate-900 rounded-2xl px-6 py-4 font-semibold flex items-center gap-3">
+          <button className="group flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-slate-900 transition-all hover:shadow-xl dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700">
             Export Report
             <ArrowRight
               size={18}
@@ -172,7 +172,7 @@ function Transactions() {
           return (
             <div
               key={item.title}
-              className="relative overflow-hidden rounded-[10px]rounded border border-slate-200 bg-white p-6 shadow-[0_10px_35px_rgba(15,23,42,.06)]"
+              className="relative overflow-hidden rounded-[10px] border border-slate-200 bg-white p-6 shadow-[0_10px_35px_rgba(15,23,42,.06)] transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 dark:shadow-none"
             >
               <div
                 className={`absolute -top-10 -right-10 h-36 w-36 rounded-full ${item.bg}`}
@@ -180,11 +180,11 @@ function Transactions() {
 
               <div className="relative flex justify-between">
                 <div>
-                  <p className="uppercase tracking-[0.25em] text-xs text-slate-400">
+                  <p className="uppercase tracking-[0.25em] text-xs text-slate-400 dark:text-slate-500">
                     {item.title}
                   </p>
 
-                  <h2 className="mt-4 text-4xl font-bold text-slate-800">
+                  <h2 className="mt-4 text-4xl font-bold text-slate-800 dark:text-white">
                     {item.value}
                   </h2>
                 </div>
@@ -199,14 +199,14 @@ function Transactions() {
           );
         })}
       </div>
-      <div className="-rounded-[10px] border border-slate-200 bg-white shadow-[0_10px_35px_rgba(15,23,42,.06)] overflow-hidden">
-        <div className="flex flex-col lg:flex-row justify-between gap-4 p-6 border-b border-slate-100">
+      <div className="rounded-[10px] border border-slate-200 bg-white shadow-[0_10px_35px_rgba(15,23,42,.06)] overflow-hidden dark:bg-slate-900 dark:border-slate-800 dark:shadow-none">
+        <div className="flex flex-col lg:flex-row justify-between gap-4 p-6 border-b border-slate-100 dark:border-slate-800">
           <div>
-            <h2 className="text-2xl font-bold text-slate-800">
+            <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
               Recent Transactions
             </h2>
 
-            <p className="text-slate-500 mt-1">
+            <p className="text-slate-500 dark:text-slate-400 dark:text-slate-400 mt-1">
               Showing {current.length} of {filtered.length} transactions
             </p>
           </div>
@@ -225,7 +225,7 @@ function Transactions() {
                   setPage(1);
                 }}
                 placeholder="Search transaction..."
-                className="w-64 rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 outline-none focus:border-emerald-500 focus:bg-white"
+                className="w-64 rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 outline-none transition-all focus:border-emerald-500 focus:bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-white dark:placeholder:text-slate-400 dark:focus:bg-slate-800"
               />
             </div>
 
@@ -235,7 +235,7 @@ function Transactions() {
                 setFilter(e.target.value);
                 setPage(1);
               }}
-              className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none"
+              className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition dark:bg-slate-800 dark:border-slate-700 dark:text-white"
             >
               <option>All</option>
               <option>Completed</option>
@@ -251,29 +251,29 @@ function Transactions() {
 
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-slate-50">
+            <thead className="bg-slate-50 dark:bg-slate-800">
               <tr>
-                <th className="px-6 py-4 text-left text-xs uppercase tracking-wider text-slate-500">
+                <th className="px-6 py-4 text-left text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Merchant
                 </th>
 
-                <th className="px-6 py-4 text-left text-xs uppercase tracking-wider text-slate-500">
+                <th className="px-6 py-4 text-left text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Category
                 </th>
 
-                <th className="px-6 py-4 text-left text-xs uppercase tracking-wider text-slate-500">
+                <th className="px-6 py-4 text-left text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Payment
                 </th>
 
-                <th className="px-6 py-4 text-left text-xs uppercase tracking-wider text-slate-500">
+                <th className="px-6 py-4 text-left text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Date
                 </th>
 
-                <th className="px-6 py-4 text-right text-xs uppercase tracking-wider text-slate-500">
+                <th className="px-6 py-4 text-right text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Amount
                 </th>
 
-                <th className="px-6 py-4 text-center text-xs uppercase tracking-wider text-slate-500">
+                <th className="px-6 py-4 text-center text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Status
                 </th>
               </tr>
@@ -284,7 +284,7 @@ function Transactions() {
                 current.map((item) => (
                   <tr
                     key={item.id}
-                    className="border-t border-slate-100 hover:bg-slate-50 transition"
+                    className="border-t border-slate-100 transition hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800"
                   >
                     <td className="px-6 py-5">
                       <div className="flex items-center gap-4">
@@ -293,24 +293,30 @@ function Transactions() {
                         </div>
 
                         <div>
-                          <h3 className="font-semibold text-slate-800">
+                          <h3 className="font-semibold text-slate-800 dark:text-white">
                             {item.title}
                           </h3>
 
-                          <p className="text-sm text-slate-500">#{item.id}</p>
+                          <p className="text-sm text-slate-500 dark:text-slate-400">
+                            #{item.id}
+                          </p>
                         </div>
                       </div>
                     </td>
 
                     <td className="px-6 py-5">
-                      <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">
+                      <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                         {item.category}
                       </span>
                     </td>
 
-                    <td className="px-6 py-5 text-slate-600">{item.payment}</td>
+                    <td className="px-6 py-5 text-slate-600 dark:text-slate-400">
+                      {item.payment}
+                    </td>
 
-                    <td className="px-6 py-5 text-slate-600">{item.date}</td>
+                    <td className="px-6 py-5 text-slate-600 dark:text-slate-400">
+                      {item.date}
+                    </td>
 
                     <td
                       className={`px-6 py-5 text-right font-bold ${
@@ -325,8 +331,8 @@ function Transactions() {
                       <span
                         className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
                           item.status === "Completed"
-                            ? "bg-emerald-100 text-emerald-700"
-                            : "bg-amber-100 text-amber-700"
+                            ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
+                            : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
                         }`}
                       >
                         {item.status}
@@ -336,7 +342,10 @@ function Transactions() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className="py-16 text-center text-slate-500">
+                  <td
+                    colSpan={6}
+                    className="py-16 text-center text-slate-500 dark:text-slate-400"
+                  >
                     No Transactions Found
                   </td>
                 </tr>
@@ -345,23 +354,23 @@ function Transactions() {
           </table>
         </div>
 
-        <div className="flex items-center justify-between border-t border-slate-100 p-6">
+        <div className="flex items-center justify-between border-t border-slate-100 p-6 dark:border-slate-800">
           <button
             disabled={page === 1}
             onClick={() => setPage(page - 1)}
-            className="rounded-xl border border-slate-200 px-5 py-2 disabled:opacity-40"
+            className="rounded-xl border border-slate-200 px-5 py-2 transition disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
           >
             Previous
           </button>
 
-          <span className="font-medium text-slate-600">
+          <span className="font-medium text-slate-600 dark:text-slate-300">
             Page {page} of {totalPages || 1}
           </span>
 
           <button
             disabled={page === totalPages || totalPages === 0}
             onClick={() => setPage(page + 1)}
-            className="rounded-xl border border-slate-200 px-5 py-2 disabled:opacity-40"
+            className="rounded-xl border border-slate-200 px-5 py-2 transition disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
           >
             Next
           </button>
