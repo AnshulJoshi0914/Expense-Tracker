@@ -4,7 +4,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes.js";
 import connectDB from "./config/db.js";
-
+import categoryRoutes from "./routes/categoryRoutes.js";
+import transactionRoutes from "./routes/transactionRoutes.js";
+import budgetRoutes from "./routes/budgetRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -15,7 +17,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/api/auth", authRoutes);
-
+app.use("/api/categories", categoryRoutes);
+app.use("/api/transactions", transactionRoutes);
+app.use("/api/budgets", budgetRoutes);
 app.get("/", (req, res) => {
   res.json({
     success: true,
