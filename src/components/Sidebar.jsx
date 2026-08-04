@@ -169,7 +169,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
         <div className="mt-auto">
 
-          <div className="rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-600 p-6 text-white shadow-xl">
+          <div className="rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-6 text-white shadow-xl">
 
             <div className="flex items-center justify-between">
 

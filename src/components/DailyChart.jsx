@@ -24,7 +24,7 @@ function DailyChart() {
   ];
 
   return (
-    <div className="overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_12px_35px_rgba(15,23,42,0.06)] transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 dark:shadow-none">
+    <div className="overflow-hidden rounded-[10px] border border-slate-200 bg-white shadow-[0_12px_35px_rgba(15,23,42,0.06)] transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 dark:shadow-none">
 
       <div className="flex items-center justify-between border-b border-slate-100 px-6 py-5 dark:border-slate-800">
 
