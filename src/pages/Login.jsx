@@ -8,11 +8,14 @@ import {
   EyeOff,
   ArrowRight,
 } from "lucide-react";
-import { Link } from "react-router-dom";
 
+import { useNavigate, Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import api from "../services/api";
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
-
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -28,10 +31,29 @@ function Login() {
     }));
   }
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
-  }
+
+    try {
+      setLoading(true);
+
+      const { data } = await api.post("/auth/login", {
+        email: form.email,
+        password: form.password,
+      });
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      toast.success("Login Successful 🎉");
+
+      navigate("/dashboard");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Login Failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#061610] via-[#0b2b22] to-[#061610]">
@@ -121,7 +143,6 @@ function Login() {
                 </label>
 
                 <div className="relative">
-
                   <input
                     type="email"
                     name="email"
@@ -139,7 +160,6 @@ function Login() {
                 </label>
 
                 <div className="relative">
-
                   <input
                     type={showPassword ? "text" : "password"}
                     name="password"
@@ -180,13 +200,17 @@ function Login() {
               </div>
               <button
                 type="submit"
-                className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-500 py-4 text-lg font-bold text-white shadow-[0_20px_45px_rgba(16,185,129,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_60px_rgba(16,185,129,.45)]"
+                disabled={loading}
+                className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-500 py-4 text-lg font-bold text-white shadow-[0_20px_45px_rgba(16,185,129,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_60px_rgba(16,185,129,.45)] disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Sign In
-                <ArrowRight
-                  size={20}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
+                {loading ? "Signing In..." : "Sign In"}
+
+                {!loading && (
+                  <ArrowRight
+                    size={20}
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                )}
               </button>
               <div className="relative py-2">
                 <div className="absolute inset-0 flex items-center">
