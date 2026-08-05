@@ -11,10 +11,17 @@ import {
   HeartPulse,
 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { useCategories } from "../hooks/useCategories";
+import {
+  useCategories,
+  useCreateCategory,
+  useDeleteCategory,
+} from "../hooks/useCategories";
+
+import toast from "react-hot-toast";
 function Categories() {
   const { data, isLoading, error } = useCategories();
-
+  const createCategory = useCreateCategory();
+  const deleteCategory = useDeleteCategory();
   const categories = data?.categories || [];
 
   const [search, setSearch] = useState("");
@@ -38,7 +45,6 @@ function Categories() {
       </div>
     );
   }
-  
 
   return (
     <div className="space-y-8">
@@ -56,7 +62,21 @@ function Categories() {
             </p>
           </div>
 
-          <button className="flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-slate-900 transition hover:scale-105 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700">
+          <button
+            onClick={async () => {
+              const name = prompt("Category Name");
+
+              if (!name) return;
+
+              try {
+                await createCategory.mutateAsync({ name });
+                toast.success("Category created");
+              } catch (err) {
+                toast.error(err.response?.data?.message || "Failed");
+              }
+            }}
+            className="flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-slate-900"
+          >
             <Plus size={20} />
             Add Category
           </button>
@@ -65,7 +85,6 @@ function Categories() {
 
       <div className="flex items-center justify-between">
         <div className="relative">
-
           <input
             placeholder="Search category..."
             value={search}
@@ -84,10 +103,8 @@ function Categories() {
             <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-emerald-100/20" />
 
             <div className="relative flex justify-between">
-              <div
-                className="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white shadow-lg"
-              >
-               <ShoppingBag size={30} />
+              <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white shadow-lg">
+                <ShoppingBag size={30} />
               </div>
 
               <div className="flex gap-2">
@@ -95,7 +112,21 @@ function Categories() {
                   <Pencil size={18} />
                 </button>
 
-                <button className="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-100 text-rose-600 transition hover:bg-rose-200 dark:bg-rose-900/20 dark:text-rose-400 dark:hover:bg-rose-900/40">
+                <button
+                  onClick={async () => {
+                    if (!window.confirm("Delete this category?")) return;
+
+                    try {
+                      await deleteCategory.mutateAsync(category._id);
+                      toast.success("Category deleted");
+                    } catch (err) {
+                      toast.error(
+                        err.response?.data?.message || "Delete failed",
+                      );
+                    }
+                  }}
+                  className="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-100 text-rose-600 transition hover:bg-rose-200 dark:bg-rose-900/20 dark:text-rose-400 dark:hover:bg-rose-900/40"
+                >
                   <Trash2 size={18} />
                 </button>
               </div>

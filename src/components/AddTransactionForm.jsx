@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X } from "lucide-react";
-import { useCreateTransaction } from "../hooks/useTransactions";
+import {
+  useCreateTransaction,
+  useUpdateTransaction,
+} from "../hooks/useTransactions";
 import toast from "react-hot-toast";
 
-function AddTransactionForm({ open, onClose, categories = [] }) {
+function AddTransactionForm({
+  open,
+  onClose,
+  categories = [],
+  transaction = null,
+}) {
   const createTransaction = useCreateTransaction();
+  const updateTransaction = useUpdateTransaction();
 
   const [form, setForm] = useState({
     title: "",
@@ -16,28 +25,26 @@ function AddTransactionForm({ open, onClose, categories = [] }) {
     date: new Date().toISOString().slice(0, 10),
   });
 
-  if (!open) return null;
-
   const handleChange = (e) => {
     setForm((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      await createTransaction.mutateAsync({
-        ...form,
-        amount: Number(form.amount),
+  useEffect(() => {
+    if (transaction) {
+      setForm({
+        title: transaction.title || "",
+        amount: transaction.amount || "",
+        type: transaction.type || "expense",
+        category: transaction.category?._id || "",
+        paymentMethod: transaction.paymentMethod || "Cash",
+        note: transaction.note || "",
+        date: transaction.date
+          ? transaction.date.slice(0, 10)
+          : new Date().toISOString().slice(0, 10),
       });
-
-      toast.success("Transaction Added Successfully");
-      
-      onClose();
-
+    } else {
       setForm({
         title: "",
         amount: "",
@@ -47,22 +54,52 @@ function AddTransactionForm({ open, onClose, categories = [] }) {
         note: "",
         date: new Date().toISOString().slice(0, 10),
       });
-    } catch (err) {
-      console.error(err);
+    }
+  }, [transaction, open]);
 
-      alert(err.response?.data?.message || "Failed to create transaction");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (transaction) {
+        await updateTransaction.mutateAsync({
+          id: transaction._id,
+          transaction: {
+            ...form,
+            amount: Number(form.amount),
+          },
+        });
+
+        toast.success("Transaction Updated");
+      } else {
+        await createTransaction.mutateAsync({
+          ...form,
+          amount: Number(form.amount),
+        });
+
+        toast.success("Transaction Added");
+      }
+
+      onClose();
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Operation failed");
     }
   };
-
+  if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
       <div className="w-full max-w-2xl rounded-3xl bg-white p-8 shadow-2xl dark:bg-slate-900">
         <div className="mb-8 flex items-center justify-between">
           <h2 className="text-3xl font-bold dark:text-white">
-            Add Transaction
+            {transaction ? "Edit Transaction" : "Add Transaction"}
           </h2>
 
-          <button onClick={onClose}>
+          <button
+            onClick={onClose}
+            disabled={
+              createTransaction.isPending || updateTransaction.isPending
+            }
+          >
             <X />
           </button>
         </div>
@@ -211,7 +248,11 @@ function AddTransactionForm({ open, onClose, categories = [] }) {
               disabled={createTransaction.isPending}
               className="rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-3 font-semibold text-white transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {createTransaction.isPending ? "Saving..." : "Save Transaction"}
+              {createTransaction.isPending || updateTransaction.isPending
+                ? "Saving..."
+                : transaction
+                  ? "Update Transaction"
+                  : "Save Transaction"}
             </button>
           </div>
         </form>

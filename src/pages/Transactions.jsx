@@ -1,4 +1,6 @@
 import { useMemo, useState } from "react";
+import toast from "react-hot-toast";
+import { useDeleteTransaction } from "../hooks/useTransactions";
 import {
   ArrowDownCircle,
   ArrowUpCircle,
@@ -7,14 +9,25 @@ import {
   ArrowRight,
   Search,
   Download,
+  Pencil,
+  Trash2,
 } from "lucide-react";
 import AddTransactionForm from "../components/AddTransactionForm";
 import { useTransactions } from "../hooks/useTransactions";
 import { useCategories } from "../hooks/useCategories";
 function Transactions() {
+  const deleteTransaction = useDeleteTransaction();
   const { data, isLoading } = useTransactions();
   const { data: categoryData } = useCategories();
-
+  const handleDelete = async (id) => {
+    if (!window.confirm("Delete this transaction?")) return;
+    try {
+      await deleteTransaction.mutateAsync(id);
+      toast.success("Transaction deleted");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Delete failed");
+    }
+  };
   const categories = categoryData?.categories || [];
   const transactions = data?.transactions || [];
 
@@ -31,7 +44,9 @@ function Transactions() {
     .reduce((sum, t) => sum + t.amount, 0);
 
   const pending = transactions.filter((t) => t.status === "Pending").length;
-
+  const handleEdit = () => {
+    toast("Edit feature coming next");
+  };
   const balance = income - expenses;
 
   const stats = [
@@ -229,13 +244,14 @@ function Transactions() {
                 <th className="px-6 py-4 text-right">Amount</th>
 
                 <th className="px-6 py-4 text-center">Type</th>
+                <th className="px-6 py-4 text-center">Actions</th>
               </tr>
             </thead>
 
             <tbody>
               {current.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-16 text-center text-slate-500">
+                  <td colSpan={7} className="py-16 text-center text-slate-500">
                     No Transactions Found
                   </td>
                 </tr>
@@ -289,6 +305,23 @@ function Transactions() {
                       >
                         {item.type}
                       </span>
+                    </td>
+                    <td className="px-6 py-5">
+                      <div className="flex justify-center gap-2">
+                        <button
+                          onClick={() => handleEdit(item)}
+                          className="rounded-xl bg-blue-100 p-2 text-blue-600 hover:bg-blue-200"
+                        >
+                          <Pencil size={18} />
+                        </button>
+
+                        <button
+                          onClick={() => handleDelete(item._id)}
+                          className="rounded-xl bg-red-100 p-2 text-red-600 hover:bg-red-200"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))

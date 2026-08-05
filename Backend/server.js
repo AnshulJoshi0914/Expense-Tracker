@@ -25,6 +25,7 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/budgets", budgetRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/reports", reportRoutes);
 app.get("/", (req, res) => {
   res.json({
     success: true,
