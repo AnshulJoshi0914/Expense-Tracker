@@ -22,27 +22,31 @@ import {
   Cell,
   Legend,
 } from "recharts";
-
+import { useReports } from "../hooks/useReports";
 const COLORS = ["#10B981", "#3B82F6", "#F59E0B", "#EF4444", "#8B5CF6"];
-
 function Reports() {
-  const monthlyExpenses = [
-    { month: "Jan", income: 4200, expense: 2600 },
-    { month: "Feb", income: 4600, expense: 3100 },
-    { month: "Mar", income: 5100, expense: 3400 },
-    { month: "Apr", income: 4700, expense: 2950 },
-    { month: "May", income: 5500, expense: 3800 },
-    { month: "Jun", income: 6100, expense: 4200 },
-    { month: "Jul", income: 6800, expense: 4500 },
-  ];
+  const { data, isLoading, error } = useReports();
 
-  const categoryExpense = [
-    { name: "Food", value: 950 },
-    { name: "Housing", value: 2100 },
-    { name: "Shopping", value: 870 },
-    { name: "Transport", value: 520 },
-    { name: "Entertainment", value: 760 },
-  ];
+  const summary = data?.summary || {};
+  const monthlyExpenses = data?.monthlyTrend || [];
+  const categoryExpense = data?.categoryBreakdown || [];
+
+  if (isLoading) {
+    return (
+      <div className="flex h-[70vh] items-center justify-center text-xl font-semibold">
+        Loading Reports...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex h-[70vh] items-center justify-center text-red-500">
+        Failed to load reports.
+      </div>
+    );
+  }
+
 
   return (
     <div className="space-y-8">
@@ -81,7 +85,7 @@ function Reports() {
               </p>
 
               <h2 className="mt-4 text-4xl font-bold text-slate-800 dark:text-white">
-                ₹4,18,000
+                ₹{summary.totalIncome?.toLocaleString() || 0}
               </h2>
             </div>
 
@@ -101,7 +105,7 @@ function Reports() {
               </p>
 
               <h2 className="mt-4 text-4xl font-bold text-slate-800 dark:text-white">
-                ₹2,45,000
+                ₹{summary.totalExpense?.toLocaleString() || 0}
               </h2>
             </div>
 
@@ -121,7 +125,7 @@ function Reports() {
               </p>
 
               <h2 className="mt-4 text-4xl font-bold text-slate-800 dark:text-white">
-                ₹1,73,000
+                ₹{summary.totalSavings?.toLocaleString() || 0}
               </h2>
             </div>
 
@@ -141,7 +145,7 @@ function Reports() {
               </p>
 
               <h2 className="mt-4 text-4xl font-bold text-slate-800 dark:text-white">
-                +₹54,000
+                ₹{summary.cashFlow?.toLocaleString() || 0}
               </h2>
             </div>
 

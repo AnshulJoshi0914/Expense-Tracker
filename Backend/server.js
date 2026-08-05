@@ -7,7 +7,9 @@ import dashboardRoutes from "./routes/dashboardRoutes.js";
 import connectDB from "./config/db.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import transactionRoutes from "./routes/transactionRoutes.js";
+import reportRoutes from "./routes/reportRoutes.js";
 import budgetRoutes from "./routes/budgetRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -22,6 +24,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/budgets", budgetRoutes);
+app.use("/api/users", userRoutes);
 app.get("/", (req, res) => {
   res.json({
     success: true,
