@@ -7,22 +7,7 @@ import {
   Cell,
 } from "recharts";
 
-function DailyChart() {
-  const burnRate = [
-    { day: "1", value: 42 },
-    { day: "2", value: 58 },
-    { day: "3", value: 36 },
-    { day: "4", value: 74 },
-    { day: "5", value: 48 },
-    { day: "6", value: 67 },
-    { day: "7", value: 81 },
-    { day: "8", value: 63 },
-    { day: "9", value: 52 },
-    { day: "10", value: 91 },
-    { day: "11", value: 71 },
-    { day: "12", value: 59 },
-  ];
-
+function DailyChart({ dailyData = [] }) {
   return (
     <div className="overflow-hidden rounded-[10px] border border-slate-200 bg-white shadow-[0_12px_35px_rgba(15,23,42,0.06)] transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 dark:shadow-none">
 
@@ -38,7 +23,7 @@ function DailyChart() {
 
           <h2 className="mt-2 text-2xl font-bold text-slate-800 dark:text-white">
 
-            Daily Burn Rate
+            Daily Expenses
 
           </h2>
 
@@ -48,7 +33,7 @@ function DailyChart() {
 
           <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
 
-            Last 12 Days
+            Live Data
 
           </span>
 
@@ -58,57 +43,65 @@ function DailyChart() {
 
       <div className="h-[260px] p-5">
 
-        <ResponsiveContainer width="100%" height="100%">
+        {dailyData.length === 0 ? (
 
-          <BarChart data={burnRate}>
+          <div className="flex h-full items-center justify-center text-slate-500 dark:text-slate-400">
 
-            <XAxis
-              dataKey="day"
-              axisLine={false}
-              tickLine={false}
-              tick={{
-                fill: "#94A3B8",
-                fontSize: 12,
-              }}
-            />
+            No Expense Data Available
 
-            <Tooltip
-              cursor={{ fill: "#1E293B" }}
-              contentStyle={{
-                background: "#0F172A",
-                border: "1px solid #334155",
-                borderRadius: "16px",
-                color: "#fff",
-                boxShadow: "0 12px 35px rgba(15,23,42,.25)",
-              }}
-              labelStyle={{
-                color: "#CBD5E1",
-              }}
-            />
+          </div>
 
-            <Bar
-              dataKey="value"
-              radius={[12, 12, 0, 0]}
-            >
+        ) : (
 
-              {burnRate.map((_, index) => (
+          <ResponsiveContainer width="100%" height="100%">
 
-                <Cell
-                  key={index}
-                  fill={
-                    index === burnRate.length - 1
-                      ? "#10B981"
-                      : "#6EE7B7"
-                  }
-                />
+            <BarChart data={dailyData}>
 
-              ))}
+              <XAxis
+                dataKey="day"
+                axisLine={false}
+                tickLine={false}
+                tick={{
+                  fill: "#94A3B8",
+                  fontSize: 12,
+                }}
+              />
 
-            </Bar>
+              <Tooltip
+                formatter={(value) => [`₹${value}`, "Expense"]}
+                cursor={{ fill: "#1E293B" }}
+                contentStyle={{
+                  background: "#0F172A",
+                  border: "1px solid #334155",
+                  borderRadius: "16px",
+                  color: "#fff",
+                }}
+              />
 
-          </BarChart>
+              <Bar
+                dataKey="amount"
+                radius={[12, 12, 0, 0]}
+              >
+                {dailyData.map((_, index) => (
 
-        </ResponsiveContainer>
+                  <Cell
+                    key={index}
+                    fill={
+                      index === dailyData.length - 1
+                        ? "#10B981"
+                        : "#6EE7B7"
+                    }
+                  />
+
+                ))}
+
+              </Bar>
+
+            </BarChart>
+
+          </ResponsiveContainer>
+
+        )}
 
       </div>
 

@@ -3,37 +3,19 @@ import {
   TrendingUp,
 } from "lucide-react";
 
-function Analytics() {
-  const categoryData = [
-    {
-      name: "Housing",
-      value: 1450,
-      color: "#10B981",
-    },
-    {
-      name: "Food",
-      value: 412,
-      color: "#06B6D4",
-    },
-    {
-      name: "Transport",
-      value: 268,
-      color: "#EAB308",
-    },
-    {
-      name: "Utilities",
-      value: 194,
-      color: "#EF4444",
-    },
-    {
-      name: "Leisure",
-      value: 132,
-      color: "#8B5CF6",
-    },
-  ];
+const colors = [
+  "#10B981",
+  "#06B6D4",
+  "#EAB308",
+  "#EF4444",
+  "#8B5CF6",
+  "#3B82F6",
+  "#F97316",
+];
 
-  const total = categoryData.reduce(
-    (sum, item) => sum + item.value,
+function Analytics({ analytics = [] }) {
+  const total = analytics.reduce(
+    (sum, item) => sum + item.amount,
     0
   );
 
@@ -54,13 +36,13 @@ function Analytics() {
 
             <h2 className="mt-2 text-4xl font-bold">
 
-              ${total.toLocaleString()}
+              ₹{total.toLocaleString()}
 
             </h2>
 
           </div>
 
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 backdrop-blur">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20">
 
             <TrendingUp size={28} />
 
@@ -72,7 +54,7 @@ function Analytics() {
 
           <ArrowUpRight size={16} />
 
-          <span>+12.6% compared to last month</span>
+          <span>Expense by Category</span>
 
         </div>
 
@@ -80,71 +62,86 @@ function Analytics() {
 
       <div className="p-6">
 
-        <div className="flex h-3 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
+        {analytics.length === 0 ? (
 
-          {categoryData.map((item) => (
-            <div
-              key={item.name}
-              style={{
-                width: `${(item.value / total) * 100}%`,
-                background: item.color,
-              }}
-            />
-          ))}
+          <div className="py-6 text-center text-slate-500 dark:text-slate-400">
 
-        </div>
+            No Analytics Available
 
-        <div className="mt-7 space-y-5">
+          </div>
 
-          {categoryData.map((item) => (
+        ) : (
 
-            <div
-              key={item.name}
-              className="flex items-center justify-between"
-            >
+          <>
+            <div className="flex h-3 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
 
-              <div className="flex items-center gap-3">
-
+              {analytics.map((item, index) => (
                 <div
-                  className="h-3.5 w-3.5 rounded-full"
+                  key={item.category}
                   style={{
-                    background: item.color,
+                    width: `${(item.amount / total) * 100}%`,
+                    background: colors[index % colors.length],
                   }}
                 />
-
-                <span className="font-medium text-slate-700 dark:text-slate-200">
-
-                  {item.name}
-
-                </span>
-
-              </div>
-
-              <div className="text-right">
-
-                <p className="font-bold text-slate-800 dark:text-white">
-
-                  ${item.value}
-
-                </p>
-
-                <p className="text-xs text-slate-400 dark:text-slate-500">
-
-                  {(
-                    (item.value / total) *
-                    100
-                  ).toFixed(0)}
-                  %
-
-                </p>
-
-              </div>
+              ))}
 
             </div>
 
-          ))}
+            <div className="mt-7 space-y-5">
 
-        </div>
+              {analytics.map((item, index) => (
+
+                <div
+                  key={item.category}
+                  className="flex items-center justify-between"
+                >
+
+                  <div className="flex items-center gap-3">
+
+                    <div
+                      className="h-3.5 w-3.5 rounded-full"
+                      style={{
+                        background:
+                          colors[index % colors.length],
+                      }}
+                    />
+
+                    <span className="font-medium text-slate-700 dark:text-slate-200">
+
+                      {item.category}
+
+                    </span>
+
+                  </div>
+
+                  <div className="text-right">
+
+                    <p className="font-bold text-slate-800 dark:text-white">
+
+                      ₹{item.amount}
+
+                    </p>
+
+                    <p className="text-xs text-slate-400">
+
+                      {(
+                        (item.amount / total) *
+                        100
+                      ).toFixed(0)}
+                      %
+
+                    </p>
+
+                  </div>
+
+                </div>
+
+              ))}
+
+            </div>
+          </>
+
+        )}
 
       </div>
 

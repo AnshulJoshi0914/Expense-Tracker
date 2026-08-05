@@ -9,134 +9,92 @@ import {
   Download,
 } from "lucide-react";
 
+import { useTransactions } from "../hooks/useTransactions";
+
 function Transactions() {
+  const { data, isLoading } = useTransactions();
+
+  const transactions = data?.transactions || [];
+
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("All");
+  const [page, setPage] = useState(1);
+
+  const income = transactions
+    .filter((t) => t.type === "income")
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const expenses = transactions
+    .filter((t) => t.type === "expense")
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const pending = transactions.filter(
+    (t) => t.status === "Pending"
+  ).length;
+
+  const balance = income - expenses;
+
   const stats = [
     {
       title: "Income",
-      value: "$3,200",
+      value: `₹${income.toLocaleString()}`,
       icon: ArrowUpCircle,
       color: "from-emerald-500 to-teal-500",
       bg: "bg-emerald-50 dark:bg-emerald-900/20",
     },
     {
       title: "Expenses",
-      value: "$420",
+      value: `₹${expenses.toLocaleString()}`,
       icon: ArrowDownCircle,
       color: "from-rose-500 to-red-500",
       bg: "bg-rose-50 dark:bg-rose-900/20",
     },
     {
       title: "Pending",
-      value: "2",
+      value: pending,
       icon: Clock4,
       color: "from-amber-500 to-orange-500",
       bg: "bg-amber-50 dark:bg-amber-900/20",
     },
     {
       title: "Balance",
-      value: "$2,780",
+      value: `₹${balance.toLocaleString()}`,
       icon: Wallet,
       color: "from-sky-500 to-indigo-500",
       bg: "bg-sky-50 dark:bg-sky-900/20",
     },
   ];
 
-  const transactions = [
-    {
-      id: 1,
-      title: "Netflix",
-      category: "Entertainment",
-      payment: "Visa •••• 4582",
-      date: "02 Aug 2026",
-      amount: -19.99,
-      status: "Completed",
-    },
-    {
-      id: 2,
-      title: "Salary",
-      category: "Income",
-      payment: "Bank Transfer",
-      date: "01 Aug 2026",
-      amount: 3200,
-      status: "Completed",
-    },
-    {
-      id: 3,
-      title: "Amazon",
-      category: "Shopping",
-      payment: "UPI",
-      date: "31 Jul 2026",
-      amount: -214.35,
-      status: "Completed",
-    },
-    {
-      id: 4,
-      title: "Electricity Bill",
-      category: "Utilities",
-      payment: "Credit Card",
-      date: "30 Jul 2026",
-      amount: -96.7,
-      status: "Pending",
-    },
-    {
-      id: 5,
-      title: "McDonald's",
-      category: "Food",
-      payment: "Cash",
-      date: "29 Jul 2026",
-      amount: -12.5,
-      status: "Completed",
-    },
-    {
-      id: 6,
-      title: "Uber",
-      category: "Transport",
-      payment: "UPI",
-      date: "28 Jul 2026",
-      amount: -17.3,
-      status: "Completed",
-    },
-    {
-      id: 7,
-      title: "Spotify",
-      category: "Entertainment",
-      payment: "Debit Card",
-      date: "27 Jul 2026",
-      amount: -9.99,
-      status: "Completed",
-    },
-    {
-      id: 8,
-      title: "Gym Membership",
-      category: "Health",
-      payment: "Debit Card",
-      date: "26 Jul 2026",
-      amount: -49.99,
-      status: "Pending",
-    },
-  ];
-
-  const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("All");
-  const [page, setPage] = useState(1);
-
   const perPage = 5;
 
   const filtered = useMemo(() => {
     return transactions.filter((item) => {
-      const searchMatch = item.title
-        .toLowerCase()
+      const matchesSearch = item.title
+        ?.toLowerCase()
         .includes(search.toLowerCase());
 
-      const filterMatch = filter === "All" || item.status === filter;
+      const matchesFilter =
+        filter === "All" ||
+        (item.status || "Completed") === filter;
 
-      return searchMatch && filterMatch;
+      return matchesSearch && matchesFilter;
     });
-  }, [search, filter]);
+  }, [transactions, search, filter]);
 
   const totalPages = Math.ceil(filtered.length / perPage);
 
-  const current = filtered.slice((page - 1) * perPage, page * perPage);
+  const current = filtered.slice(
+    (page - 1) * perPage,
+    page * perPage
+  );
+
+  if (isLoading) {
+    return (
+      <div className="flex h-[70vh] items-center justify-center text-xl font-semibold">
+        Loading Transactions...
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -200,184 +158,238 @@ function Transactions() {
         })}
       </div>
       <div className="rounded-[10px] border border-slate-200 bg-white shadow-[0_10px_35px_rgba(15,23,42,.06)] overflow-hidden dark:bg-slate-900 dark:border-slate-800 dark:shadow-none">
-        <div className="flex flex-col lg:flex-row justify-between gap-4 p-6 border-b border-slate-100 dark:border-slate-800">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
-              Recent Transactions
-            </h2>
 
-            <p className="text-slate-500 dark:text-slate-400 dark:text-slate-400 mt-1">
-              Showing {current.length} of {filtered.length} transactions
-            </p>
-          </div>
+  <div className="flex flex-col lg:flex-row justify-between gap-4 p-6 border-b border-slate-100 dark:border-slate-800">
 
-          <div className="flex flex-wrap gap-3">
-            <div className="relative">
-              <Search
-                size={18}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-              />
+    <div>
 
-              <input
-                value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  setPage(1);
-                }}
-                placeholder="Search transaction..."
-                className="w-64 rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 outline-none transition-all focus:border-emerald-500 focus:bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-white dark:placeholder:text-slate-400 dark:focus:bg-slate-800"
-              />
-            </div>
+      <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
 
-            <select
-              value={filter}
-              onChange={(e) => {
-                setFilter(e.target.value);
-                setPage(1);
-              }}
-              className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+        Recent Transactions
+
+      </h2>
+
+      <p className="text-slate-500 dark:text-slate-400 mt-1">
+
+        Showing {current.length} of {filtered.length} transactions
+
+      </p>
+
+    </div>
+
+    <div className="flex flex-wrap gap-3">
+
+      <div className="relative">
+
+        <Search
+          size={18}
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+        />
+
+        <input
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
+          placeholder="Search transaction..."
+          className="w-64 rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 outline-none focus:border-emerald-500 focus:bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+        />
+
+      </div>
+
+      <select
+        value={filter}
+        onChange={(e) => {
+          setFilter(e.target.value);
+          setPage(1);
+        }}
+        className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+      >
+
+        <option>All</option>
+
+        <option>Completed</option>
+
+        <option>Pending</option>
+
+      </select>
+
+      <button className="flex items-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-5 py-3 font-semibold text-white">
+
+        <Download size={18} />
+
+        Export
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <div className="overflow-x-auto">
+
+    <table className="w-full">
+
+      <thead className="bg-slate-50 dark:bg-slate-800">
+
+        <tr>
+
+          <th className="px-6 py-4 text-left">Title</th>
+
+          <th className="px-6 py-4 text-left">Category</th>
+
+          <th className="px-6 py-4 text-left">Payment</th>
+
+          <th className="px-6 py-4 text-left">Date</th>
+
+          <th className="px-6 py-4 text-right">Amount</th>
+
+          <th className="px-6 py-4 text-center">Type</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        {current.length === 0 ? (
+
+          <tr>
+
+            <td
+              colSpan={6}
+              className="py-16 text-center text-slate-500"
             >
-              <option>All</option>
-              <option>Completed</option>
-              <option>Pending</option>
-            </select>
 
-            <button className="flex items-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-5 py-3 font-semibold text-white">
-              <Download size={18} />
-              Export
-            </button>
-          </div>
-        </div>
+              No Transactions Found
 
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-slate-50 dark:bg-slate-800">
-              <tr>
-                <th className="px-6 py-4 text-left text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Merchant
-                </th>
+            </td>
 
-                <th className="px-6 py-4 text-left text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Category
-                </th>
+          </tr>
 
-                <th className="px-6 py-4 text-left text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Payment
-                </th>
+        ) : (
 
-                <th className="px-6 py-4 text-left text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Date
-                </th>
+          current.map((item) => (
 
-                <th className="px-6 py-4 text-right text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Amount
-                </th>
+            <tr
+              key={item._id}
+              className="border-t border-slate-100 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800"
+            >
 
-                <th className="px-6 py-4 text-center text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Status
-                </th>
-              </tr>
-            </thead>
+              <td className="px-6 py-5">
 
-            <tbody>
-              {current.length ? (
-                current.map((item) => (
-                  <tr
-                    key={item.id}
-                    className="border-t border-slate-100 transition hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800"
-                  >
-                    <td className="px-6 py-5">
-                      <div className="flex items-center gap-4">
-                        <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center font-bold text-white">
-                          {item.title.charAt(0)}
-                        </div>
+                <div className="flex items-center gap-4">
 
-                        <div>
-                          <h3 className="font-semibold text-slate-800 dark:text-white">
-                            {item.title}
-                          </h3>
+                  <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center font-bold text-white">
 
-                          <p className="text-sm text-slate-500 dark:text-slate-400">
-                            #{item.id}
-                          </p>
-                        </div>
-                      </div>
-                    </td>
+                    {item.title?.charAt(0).toUpperCase()}
 
-                    <td className="px-6 py-5">
-                      <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                        {item.category}
-                      </span>
-                    </td>
+                  </div>
 
-                    <td className="px-6 py-5 text-slate-600 dark:text-slate-400">
-                      {item.payment}
-                    </td>
+                  <div>
 
-                    <td className="px-6 py-5 text-slate-600 dark:text-slate-400">
-                      {item.date}
-                    </td>
+                    <h3 className="font-semibold text-slate-800 dark:text-white">
 
-                    <td
-                      className={`px-6 py-5 text-right font-bold ${
-                        item.amount > 0 ? "text-emerald-600" : "text-rose-500"
-                      }`}
-                    >
-                      {item.amount > 0 ? "+" : "-"}$
-                      {Math.abs(item.amount).toFixed(2)}
-                    </td>
+                      {item.title}
 
-                    <td className="px-6 py-5 text-center">
-                      <span
-                        className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
-                          item.status === "Completed"
-                            ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
-                            : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan={6}
-                    className="py-16 text-center text-slate-500 dark:text-slate-400"
-                  >
-                    No Transactions Found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+                    </h3>
+
+                  </div>
+
+                </div>
+
+              </td>
+
+              <td className="px-6 py-5">
+
+                {item.category?.name || "Other"}
+
+              </td>
+
+              <td className="px-6 py-5">
+
+                {item.paymentMethod}
+
+              </td>
+
+              <td className="px-6 py-5">
+
+                {new Date(item.date).toLocaleDateString()}
+
+              </td>
+
+              <td
+                className={`px-6 py-5 text-right font-bold ${
+                  item.type === "income"
+                    ? "text-emerald-600"
+                    : "text-red-500"
+                }`}
+              >
+
+                {item.type === "income" ? "+" : "-"}₹
+                {item.amount}
+
+              </td>
+
+              <td className="px-6 py-5 text-center">
+
+                <span
+                  className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                    item.type === "income"
+                      ? "bg-emerald-100 text-emerald-700"
+                      : "bg-red-100 text-red-700"
+                  }`}
+                >
+
+                  {item.type}
+
+                </span>
+
+              </td>
+
+            </tr>
+
+          ))
+
+        )}
+
+      </tbody>
+
+    </table>
+
+  </div>
 
         <div className="flex items-center justify-between border-t border-slate-100 p-6 dark:border-slate-800">
-          <button
-            disabled={page === 1}
-            onClick={() => setPage(page - 1)}
-            className="rounded-xl border border-slate-200 px-5 py-2 transition disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
-          >
-            Previous
-          </button>
 
-          <span className="font-medium text-slate-600 dark:text-slate-300">
-            Page {page} of {totalPages || 1}
-          </span>
+  <button
+    disabled={page === 1}
+    onClick={() => setPage((prev) => prev - 1)}
+    className="rounded-xl border border-slate-200 px-5 py-2 transition disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+  >
+    Previous
+  </button>
 
-          <button
-            disabled={page === totalPages || totalPages === 0}
-            onClick={() => setPage(page + 1)}
-            className="rounded-xl border border-slate-200 px-5 py-2 transition disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
-          >
-            Next
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+  <span className="font-medium text-slate-600 dark:text-slate-300">
+
+    Page {page} of {totalPages || 1}
+
+  </span>
+
+  <button
+    disabled={page >= totalPages}
+    onClick={() => setPage((prev) => prev + 1)}
+    className="rounded-xl border border-slate-200 px-5 py-2 transition disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+  >
+    Next
+  </button>
+
+</div>
+
+</div>
+
+</div>
+);
 }
 
 export default Transactions;
