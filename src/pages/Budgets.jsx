@@ -1,20 +1,27 @@
 import { Plus, Search, Wallet } from "lucide-react";
 import { useMemo, useState } from "react";
-import { useBudgets } from "../hooks/useBudgets";
+import {
+  useBudgets,
+  useCreateBudget,
+  useUpdateBudget,
+  useDeleteBudget,
+} from "../hooks/useBudgets";
+
+import toast from "react-hot-toast";
 function Budgets() {
   const { data, isLoading, error } = useBudgets();
+  const createBudget = useCreateBudget();
+  const updateBudget = useUpdateBudget();
+  const deleteBudget = useDeleteBudget();
+  const budgets = data?.budgets || [];
 
-const budgets = data?.budgets || [];
+  const [search, setSearch] = useState("");
 
-const [search, setSearch] = useState("");
-
-const filteredBudgets = useMemo(() => {
-  return budgets.filter((item) =>
-    item.category?.name
-      ?.toLowerCase()
-      .includes(search.toLowerCase())
-  );
-}, [budgets, search]);
+  const filteredBudgets = useMemo(() => {
+    return budgets.filter((item) =>
+      item.category?.name?.toLowerCase().includes(search.toLowerCase()),
+    );
+  }, [budgets, search]);
 
   if (isLoading) {
     return (
@@ -50,7 +57,26 @@ const filteredBudgets = useMemo(() => {
             </p>
           </div>
 
-          <button className="flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-emerald-700 shadow-lg transition hover:scale-105 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700">
+          <button
+            onClick={async () => {
+              const category = prompt("Category ID");
+              const limitAmount = prompt("Budget Amount");
+
+              if (!category || !limitAmount) return;
+
+              try {
+                await createBudget.mutateAsync({
+                  category,
+                  limitAmount: Number(limitAmount),
+                });
+
+                toast.success("Budget Created");
+              } catch (err) {
+                toast.error(err.response?.data?.message || "Failed");
+              }
+            }}
+            className="flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-emerald-700"
+          >
             <Plus size={20} />
             Create Budget
           </button>
@@ -70,9 +96,12 @@ const filteredBudgets = useMemo(() => {
 
       <div className="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
         {filteredBudgets.map((budget) => {
-          const percent = Math.min((budget.spent / budget.limit) * 100, 100);
+          const percent = Math.min(
+            ((budget.spent || 0) / budget.limitAmount) * 100,
+            100,
+          );
 
-          const remaining = budget.limit - budget.spent;
+          const remaining = budget.limitAmount - (budget.spent || 0);
 
           return (
             <div
@@ -98,10 +127,54 @@ const filteredBudgets = useMemo(() => {
                   </div>
                 </div>
 
-                <Wallet
-                  className="text-slate-300 dark:text-slate-600"
-                  size={26}
-                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={async () => {
+                      const limitAmount = prompt(
+                        "Update Budget",
+                        budget.limitAmount,
+                      );
+
+                      if (!limitAmount) return;
+
+                      try {
+                        await updateBudget.mutateAsync({
+                          id: budget._id,
+                          budget: {
+                            limitAmount: Number(limitAmount),
+                          },
+                        });
+
+                        toast.success("Budget Updated");
+                      } catch (err) {
+                        toast.error(
+                          err.response?.data?.message || "Update failed",
+                        );
+                      }
+                    }}
+                    className="rounded-xl bg-slate-100 p-2 hover:bg-slate-200"
+                  >
+                    ✏️
+                  </button>
+
+                  <button
+                    onClick={async () => {
+                      if (!window.confirm("Delete this budget?")) return;
+
+                      try {
+                        await deleteBudget.mutateAsync(budget._id);
+                        toast.success("Budget Deleted");
+                      } catch (err) {
+                        toast.error(
+                          err.response?.data?.message || "Delete failed",
+                        );
+                      }
+                    }}
+                    className="rounded-xl bg-red-100 p-2 text-red-600 hover:bg-red-200"
+                  >
+                    🗑️
+                  </button>
+                </div>
               </div>
 
               <div className="mt-8">
