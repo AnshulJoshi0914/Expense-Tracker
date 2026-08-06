@@ -231,9 +231,9 @@ function Transactions() {
 
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-slate-50 dark:bg-slate-800">
+            <thead className="bg-slate-50 dark:bg-slate-800 text-black dark:text-white">
               <tr>
-                <th className="px-6 py-4 text-left">Title</th>
+                <th  text-black dark:text-white className="px-6 py-4 text-left">Title</th>
 
                 <th className="px-6 py-4 text-left">Category</th>
 

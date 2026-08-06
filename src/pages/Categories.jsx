@@ -15,6 +15,7 @@ import {
   useCategories,
   useCreateCategory,
   useDeleteCategory,
+  useUpdateCategory,
 } from "../hooks/useCategories";
 
 import toast from "react-hot-toast";
@@ -23,6 +24,8 @@ function Categories() {
   const createCategory = useCreateCategory();
   const deleteCategory = useDeleteCategory();
   const categories = data?.categories || [];
+  const [editingCategory, setEditingCategory] = useState(null);
+  const updateCategory = useUpdateCategory();
 
   const [search, setSearch] = useState("");
   const filtered = useMemo(() => {
@@ -108,7 +111,29 @@ function Categories() {
               </div>
 
               <div className="flex gap-2">
-                <button className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700">
+                <button
+                  onClick={async () => {
+                    const newName = prompt("Edit Category", category.name);
+
+                    if (!newName) return;
+
+                    try {
+                      await updateCategory.mutateAsync({
+                        id: category._id,
+                        category: {
+                          name: newName,
+                        },
+                      });
+
+                      toast.success("Category Updated");
+                    } catch (err) {
+                      toast.error(
+                        err.response?.data?.message || "Update failed",
+                      );
+                    }
+                  }}
+                  className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                >
                   <Pencil size={18} />
                 </button>
 
