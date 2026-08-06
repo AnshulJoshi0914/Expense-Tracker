@@ -8,11 +8,11 @@ import { useNavigate } from "react-router-dom";
 function Settings() {
   const { darkMode, setDarkMode } = useTheme();
   const navigate = useNavigate();
-
+  const user = JSON.parse(localStorage.getItem("user"));
   const [form, setForm] = useState({
-    name: "Anshu Joshi",
-    email: "anshu@example.com",
-    currency: "INR",
+    name: user?.name || "",
+    email: user?.email || "",
+    currency: user?.currency || "INR",
     notifications: true,
   });
 
@@ -27,6 +27,21 @@ function Settings() {
 
   return (
     <div className="space-y-8 dark:text-white">
+      <div className="mb-8 flex items-center gap-5 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-900">
+        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 text-3xl font-bold text-white">
+          {user?.name?.charAt(0).toUpperCase()}
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold dark:text-white">{user?.name}</h2>
+
+          <p className="text-slate-500 dark:text-slate-400">{user?.email}</p>
+
+          <span className="mt-2 inline-block rounded-full bg-emerald-100 px-3 py-1 text-sm font-semibold text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400">
+            Ledgerly User
+          </span>
+        </div>
+      </div>
       <div>
         <h1 className="text-3xl font-bold">Settings</h1>
 

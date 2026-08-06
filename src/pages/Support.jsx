@@ -1,5 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ChevronDown } from "lucide-react";
 import {
   LifeBuoy,
   Mail,
@@ -11,6 +12,7 @@ import {
 } from "lucide-react";
 
 function Support() {
+  const [openFAQ, setOpenFAQ] = useState(null);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -66,6 +68,34 @@ function Support() {
       icon: <MapPin size={28} />,
       color: "from-violet-500 to-fuchsia-500",
       bg: "bg-violet-50 dark:bg-violet-900/20",
+    },
+  ];
+
+  const faqs = [
+    {
+      question: "How do I add a new expense?",
+      answer:
+        "Go to the Transactions page and click 'Add Transaction'. Fill in the details and save.",
+    },
+    {
+      question: "How can I create budgets?",
+      answer:
+        "Open the Budgets page, click 'Create Budget', choose a category and set your monthly limit.",
+    },
+    {
+      question: "Can I export my reports?",
+      answer:
+        "Yes. Visit the Reports page and click the 'Export PDF' button to download your financial report.",
+    },
+    {
+      question: "How do I change my currency?",
+      answer:
+        "Go to Settings and select your preferred currency from the dropdown menu.",
+    },
+    {
+      question: "How do I reset my password?",
+      answer:
+        "Currently password reset is not available. It will be added in a future update.",
     },
   ];
 
@@ -236,19 +266,31 @@ function Support() {
           </p>
 
           <div className="mt-8 space-y-4">
-            {[
-              "How do I add a new expense?",
-              "How can I create budgets?",
-              "Can I export my reports?",
-              "How do I change my currency?",
-              "How do I reset my password?",
-            ].map((item) => (
-              <button
-                key={item}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-left font-medium text-slate-700 transition hover:border-emerald-500 hover:bg-emerald-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-emerald-500 dark:hover:bg-emerald-900/20"
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700"
               >
-                {item}
-              </button>
+                <button
+                  onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
+                  className="flex w-full items-center justify-between bg-slate-50 px-5 py-4 text-left font-medium text-slate-700 transition hover:bg-emerald-50 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                >
+                  {faq.question}
+
+                  <ChevronDown
+                    size={18}
+                    className={`transition-transform ${
+                      openFAQ === index ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {openFAQ === index && (
+                  <div className="bg-white px-5 py-4 text-sm leading-7 text-slate-600 dark:bg-slate-900 dark:text-slate-300">
+                    {faq.answer}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>

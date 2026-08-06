@@ -5,7 +5,7 @@ import {
   CalendarDays,
   ArrowRight,
 } from "lucide-react";
-
+import { useNavigate } from "react-router-dom";
 import { useDashboard } from "../hooks/useDashboard";
 import StatCard from "../components/StatCard";
 import ExpenseTable from "../components/ExpenseTable";
@@ -14,6 +14,7 @@ import DailyChart from "../components/DailyChart";
 
 function Dashboard() {
   const { data, isLoading, error } = useDashboard();
+  const navigate = useNavigate();
   console.log({
     data,
     isLoading,
@@ -85,11 +86,14 @@ function Dashboard() {
             </p>
           </div>
 
-          <button className="group flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-emerald-700">
+          <button
+            onClick={() => navigate("/reports")}
+            className="group flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-emerald-700 transition-all duration-200 hover:bg-emerald-50 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
+          >
             View Reports
             <ArrowRight
               size={18}
-              className="transition-transform group-hover:translate-x-1"
+              className="transition-transform duration-200 group-hover:translate-x-0"
             />
           </button>
         </div>

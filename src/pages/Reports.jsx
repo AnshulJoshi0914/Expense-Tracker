@@ -23,6 +23,8 @@ import {
   Legend,
 } from "recharts";
 import { useReports } from "../hooks/useReports";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 const COLORS = ["#10B981", "#3B82F6", "#F59E0B", "#EF4444", "#8B5CF6"];
 function Reports() {
   const { data, isLoading, error } = useReports();
@@ -30,7 +32,27 @@ function Reports() {
   const summary = data?.summary || {};
   const monthlyExpenses = data?.monthlyTrend || [];
   const categoryExpense = data?.categoryBreakdown || [];
+  const exportPDF = () => {
+    const doc = new jsPDF();
 
+    doc.setFontSize(20);
+    doc.text("Ledgerly Financial Report", 14, 18);
+
+    doc.setFontSize(11);
+    doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 28);
+
+    doc.text(`Total Income : ₹${summary.totalIncome || 0}`, 14, 42);
+    doc.text(`Total Expense : ₹${summary.totalExpense || 0}`, 14, 50);
+    doc.text(`Balance : ₹${summary.balance || 0}`, 14, 58);
+
+    autoTable(doc, {
+      startY: 72,
+      head: [["Category", "Amount"]],
+      body: categoryExpense.map((item) => [item.category, `₹${item.amount}`]),
+    });
+
+    doc.save(`Ledgerly_Report_${new Date().toISOString().slice(0, 10)}.pdf`);
+  };
   if (isLoading) {
     return (
       <div className="flex h-[70vh] items-center justify-center text-xl font-semibold">
@@ -46,7 +68,6 @@ function Reports() {
       </div>
     );
   }
-
 
   return (
     <div className="space-y-8">
@@ -65,7 +86,10 @@ function Reports() {
             </p>
           </div>
 
-          <button className="group flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-slate-900 transition-all duration-200 hover:shadow-lg dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700">
+          <button
+            onClick={exportPDF}
+            className="group flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-slate-900 transition hover:shadow-xl dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
+          >
             Export PDF
             <ArrowRight
               size={18}

@@ -1,16 +1,248 @@
-# React + Vite
+# 💰 Ledgerly – Smart Expense Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Ledgerly is a modern full-stack MERN Expense Tracker that helps users manage their personal finances by tracking transactions, creating budgets, analyzing spending patterns, and generating financial reports.
 
-Currently, two official plugins are available:
+Built with a clean UI, secure authentication, responsive design, and real-time financial insights.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🔐 Authentication
+- User Registration
+- Secure Login
+- JWT Authentication
+- Protected Routes
+- Logout
 
-## Expanding the Oxlint configuration
+### 📊 Dashboard
+- Financial Overview
+- Total Income
+- Total Expenses
+- Current Balance
+- Budget Summary
+- Recent Transactions
+- Quick Navigation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+### 💳 Transactions
+- Add Transaction
+- Edit Transaction
+- Delete Transaction
+- Search Transactions
+- Filter Transactions
+- Pagination
+- CSV Export
+
+### 🏷️ Categories
+- Create Categories
+- Edit Categories
+- Delete Categories
+- Search Categories
+
+### 💰 Budget Management
+- Create Monthly Budgets
+- Track Spending
+- Remaining Budget
+- Budget Progress Bar
+- Automatic Expense Synchronization
+
+### 📈 Reports
+- Financial Analytics
+- Charts & Graphs
+- PDF Report Export
+
+### ⚙️ Settings
+- Dark Mode
+- User Profile
+- Account Preferences
+
+### 🆘 Support
+- Contact Support Form
+- Interactive FAQ Section
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+- React.js
+- Vite
+- Tailwind CSS
+- React Router DOM
+- React Query
+- Axios
+- React Hot Toast
+- Lucide React
+- Recharts
+
+## Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
+- bcrypt.js
+
+---
+
+# 📁 Project Structure
+
+```
+Ledgerly/
+│
+├── Backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── utils/
+│   ├── server.js
+│   └── .env
+│
+├── Frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── hooks/
+│   │   ├── layouts/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── App.jsx
+│   └── vite.config.js
+│
+└── README.md
+```
+
+---
+
+# ⚡ Installation
+
+## Clone Repository
+
+```bash
+git clone https://github.com/your-username/ledgerly.git
+```
+
+---
+
+## Backend Setup
+
+```bash
+cd Backend
+npm install
+```
+
+Create a `.env` file
+
+```env
+PORT=5000
+
+MONGO_URI=YOUR_MONGODB_URI
+
+JWT_SECRET=YOUR_SECRET_KEY
+```
+
+Run backend
+
+```bash
+npm run dev
+```
+
+---
+
+## Frontend Setup
+
+```bash
+cd Frontend
+npm install
+npm run dev
+```
+
+Frontend runs on
+
+```
+http://localhost:5173
+```
+
+Backend runs on
+
+```
+http://localhost:5000
+```
+
+---
+
+# 📸 Screenshots
+
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
+![alt text](image-5.png)
+![
+    ![alt text](image-7.png)
+](image-6.png)
+
+- Dashboard
+- Transactions
+- Budgets
+- Reports
+- Categories
+- Settings
+- Support
+
+---
+
+# ✨ Highlights
+
+- Responsive UI
+- Dark Mode
+- Secure Authentication
+- CRUD Operations
+- Budget Tracking
+- PDF Export
+- CSV Export
+- Search & Filters
+- Real-time Dashboard
+- Professional UI Design
+
+---
+
+# 🔮 Future Improvements
+
+- Email Verification
+- Password Reset
+- Profile Image Upload
+- Multi-Currency Support
+- AI Expense Insights
+- Recurring Transactions
+- Monthly Notifications
+- Cloud Storage
+- Mobile App
+- Google Authentication
+
+---
+
+# 👨‍💻 Author
+
+**Anshu Joshi**
+
+B.Tech CSE (AI & ML)
+
+GitHub: https://github.com/your-username
+
+LinkedIn: https://linkedin.com/in/your-profile
+
+---
+
+# 📜 License
+
+This project is licensed under the MIT License.
+
+---
+
+⭐ If you found this project useful, consider giving it a star!
