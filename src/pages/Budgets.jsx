@@ -1,4 +1,5 @@
 import { Plus, Search, Wallet } from "lucide-react";
+import AddBudgetForm from "../components/AddBudgetForm";
 import { useMemo, useState } from "react";
 import {
   useBudgets,
@@ -14,7 +15,8 @@ function Budgets() {
   const updateBudget = useUpdateBudget();
   const deleteBudget = useDeleteBudget();
   const budgets = data?.budgets || [];
-
+  const [showModal, setShowModal] = useState(false);
+  const [editingBudget, setEditingBudget] = useState(null);
   const [search, setSearch] = useState("");
 
   const filteredBudgets = useMemo(() => {
@@ -58,22 +60,9 @@ function Budgets() {
           </div>
 
           <button
-            onClick={async () => {
-              const category = prompt("Category ID");
-              const limitAmount = prompt("Budget Amount");
-
-              if (!category || !limitAmount) return;
-
-              try {
-                await createBudget.mutateAsync({
-                  category,
-                  limitAmount: Number(limitAmount),
-                });
-
-                toast.success("Budget Created");
-              } catch (err) {
-                toast.error(err.response?.data?.message || "Failed");
-              }
+            onClick={() => {
+              setEditingBudget(null);
+              setShowModal(true);
             }}
             className="flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-emerald-700"
           >
@@ -97,11 +86,11 @@ function Budgets() {
       <div className="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
         {filteredBudgets.map((budget) => {
           const percent = Math.min(
-            ((budget.spent || 0) / budget.limitAmount) * 100,
+            ((budget.spent || 0) / budget.limit) * 100,
             100,
           );
 
-          const remaining = budget.limitAmount - (budget.spent || 0);
+          const remaining = budget.limit - (budget.spent || 0);
 
           return (
             <div
@@ -130,18 +119,15 @@ function Budgets() {
                 <div className="flex gap-2">
                   <button
                     onClick={async () => {
-                      const limitAmount = prompt(
-                        "Update Budget",
-                        budget.limitAmount,
-                      );
+                      const limit = prompt("Update Budget", budget.limit);
 
-                      if (!limitAmount) return;
+                      if (!limit) return;
 
                       try {
                         await updateBudget.mutateAsync({
                           id: budget._id,
                           budget: {
-                            limitAmount: Number(limitAmount),
+                            limit: Number(limit),
                           },
                         });
 
@@ -181,7 +167,7 @@ function Budgets() {
                 <div className="flex justify-between text-sm text-slate-500 dark:text-slate-400">
                   <span>₹{budget.spent.toLocaleString()}</span>
 
-                  <span>₹{budget.limitAmount.toLocaleString()}</span>
+                  <span>₹{budget.limit.toLocaleString()}</span>
                 </div>
 
                 <div className="mt-3 h-3 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
@@ -215,6 +201,14 @@ function Budgets() {
           );
         })}
       </div>
+      <AddBudgetForm
+        open={showModal}
+        onClose={() => {
+          setShowModal(false);
+          setEditingBudget(null);
+        }}
+        budget={editingBudget}
+      />
     </div>
   );
 }

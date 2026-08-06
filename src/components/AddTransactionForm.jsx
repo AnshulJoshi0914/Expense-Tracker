@@ -81,6 +81,15 @@ function AddTransactionForm({
       }
 
       onClose();
+      setForm({
+        title: "",
+        amount: "",
+        type: "expense",
+        category: "",
+        paymentMethod: "Cash",
+        note: "",
+        date: new Date().toISOString().slice(0, 10),
+      });
     } catch (err) {
       toast.error(err.response?.data?.message || "Operation failed");
     }
@@ -238,6 +247,9 @@ function AddTransactionForm({
             <button
               type="button"
               onClick={onClose}
+              disabled={
+                createTransaction.isPending || updateTransaction.isPending
+              }
               className="rounded-2xl border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-white dark:hover:bg-slate-800"
             >
               Cancel
@@ -245,7 +257,9 @@ function AddTransactionForm({
 
             <button
               type="submit"
-              disabled={createTransaction.isPending}
+              disabled={
+                createTransaction.isPending || updateTransaction.isPending
+              }
               className="rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-3 font-semibold text-white transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {createTransaction.isPending || updateTransaction.isPending

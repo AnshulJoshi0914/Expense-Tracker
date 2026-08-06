@@ -19,6 +19,7 @@ function Transactions() {
   const deleteTransaction = useDeleteTransaction();
   const { data, isLoading } = useTransactions();
   const { data: categoryData } = useCategories();
+  const [editingTransaction, setEditingTransaction] = useState(null);
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this transaction?")) return;
     try {
@@ -44,8 +45,9 @@ function Transactions() {
     .reduce((sum, t) => sum + t.amount, 0);
 
   const pending = transactions.filter((t) => t.status === "Pending").length;
-  const handleEdit = () => {
-    toast("Edit feature coming next");
+  const handleEdit = (transaction) => {
+    setEditingTransaction(transaction);
+    setShowAddModal(true);
   };
   const balance = income - expenses;
 
@@ -107,6 +109,56 @@ function Transactions() {
     );
   }
 
+  const exportCSV = () => {
+    if (transactions.length === 0) {
+      toast.error("No transactions to export");
+      return;
+    }
+
+    const headers = [
+      "Title",
+      "Category",
+      "Amount",
+      "Type",
+      "Payment Method",
+      "Date",
+      "Note",
+    ];
+
+    const rows = transactions.map((t) => [
+      t.title,
+      t.category?.name || "",
+      t.amount,
+      t.type,
+      t.paymentMethod,
+      new Date(t.date).toLocaleDateString(),
+      t.note || "",
+    ]);
+
+    const csvContent = [headers, ...rows]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    const blob = new Blob([csvContent], {
+      type: "text/csv;charset=utf-8;",
+    });
+
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.setAttribute("download", "transactions.csv");
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    toast.success("Transactions exported successfully!");
+  };
+
   return (
     <div className="space-y-8">
       <div className="rounded-[10px] bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white p-8 shadow-[0_20px_50px_rgba(15,23,42,.18)]">
@@ -132,11 +184,14 @@ function Transactions() {
               + Add Transaction
             </button>
 
-            <button className="group flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-slate-900 transition-all hover:shadow-xl dark:bg-slate-800 dark:text-white">
+            <button
+              onClick={exportCSV}
+              className="group flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-slate-900 transition dark:bg-slate-800 dark:text-white"
+            >
               Export Report
               <ArrowRight
                 size={18}
-                className="transition group-hover:translate-x-1"
+                className="transition group-hover:translate-x-0"
               />
             </button>
           </div>
@@ -203,7 +258,7 @@ function Transactions() {
                   setPage(1);
                 }}
                 placeholder="Search transaction..."
-                className="w-64 rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 outline-none focus:border-emerald-500 focus:bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+                className="w-64 rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
               />
             </div>
 
@@ -222,7 +277,10 @@ function Transactions() {
               <option>Pending</option>
             </select>
 
-            <button className="flex items-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-5 py-3 font-semibold text-white">
+            <button
+              onClick={exportCSV}
+              className="flex items-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-5 py-3 font-semibold text-white"
+            >
               <Download size={18} />
               Export
             </button>
@@ -233,7 +291,9 @@ function Transactions() {
           <table className="w-full">
             <thead className="bg-slate-50 dark:bg-slate-800 text-black dark:text-white">
               <tr>
-                <th  text-black dark:text-white className="px-6 py-4 text-left">Title</th>
+                <th text-black dark:text-white className="px-6 py-4 text-left">
+                  Title
+                </th>
 
                 <th className="px-6 py-4 text-left">Category</th>
 
@@ -354,8 +414,12 @@ function Transactions() {
       </div>
       <AddTransactionForm
         open={showAddModal}
-        onClose={() => setShowAddModal(false)}
+        onClose={() => {
+          setShowAddModal(false);
+          setEditingTransaction(null);
+        }}
         categories={categories}
+        transaction={editingTransaction}
       />
     </div>
   );

@@ -1,4 +1,5 @@
 import Transaction from "../models/Transaction.js";
+import Budget from "../models/Budget.js";
 
 export const createTransaction = async (req, res) => {
   try {
@@ -22,6 +23,22 @@ export const createTransaction = async (req, res) => {
       note,
       date,
     });
+
+    if (type === "expense") {
+      await Budget.findOneAndUpdate(
+        {
+          user: req.user._id,
+          category,
+          month: new Date(date).getMonth() + 1,
+          year: new Date(date).getFullYear(),
+        },
+        {
+          $inc: {
+            spent: amount,
+          },
+        }
+      );
+    }
 
     res.status(201).json({
       success: true,
@@ -96,9 +113,43 @@ export const updateTransaction = async (req, res) => {
       });
     }
 
+    // Remove old expense from budget
+    if (transaction.type === "expense") {
+      await Budget.findOneAndUpdate(
+        {
+          user: req.user._id,
+          category: transaction.category,
+          month: new Date(transaction.date).getMonth() + 1,
+          year: new Date(transaction.date).getFullYear(),
+        },
+        {
+          $inc: {
+            spent: -transaction.amount,
+          },
+        }
+      );
+    }
+
     Object.assign(transaction, req.body);
 
     await transaction.save();
+
+    // Add updated expense to budget
+    if (transaction.type === "expense") {
+      await Budget.findOneAndUpdate(
+        {
+          user: req.user._id,
+          category: transaction.category,
+          month: new Date(transaction.date).getMonth() + 1,
+          year: new Date(transaction.date).getFullYear(),
+        },
+        {
+          $inc: {
+            spent: transaction.amount,
+          },
+        }
+      );
+    }
 
     res.json({
       success: true,
@@ -124,6 +175,23 @@ export const deleteTransaction = async (req, res) => {
         success: false,
         message: "Transaction not found",
       });
+    }
+
+    // Remove expense from budget
+    if (transaction.type === "expense") {
+      await Budget.findOneAndUpdate(
+        {
+          user: req.user._id,
+          category: transaction.category,
+          month: new Date(transaction.date).getMonth() + 1,
+          year: new Date(transaction.date).getFullYear(),
+        },
+        {
+          $inc: {
+            spent: -transaction.amount,
+          },
+        }
+      );
     }
 
     await transaction.deleteOne();

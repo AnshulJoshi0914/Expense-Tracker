@@ -65,11 +65,11 @@ function Reports() {
             </p>
           </div>
 
-          <button className="group flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-slate-900 transition hover:shadow-xl dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700">
+          <button className="group flex items-center gap-3 rounded-2xl bg-white px-6 py-4 font-semibold text-slate-900 transition-all duration-200 hover:shadow-lg dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700">
             Export PDF
             <ArrowRight
               size={18}
-              className="transition-transform group-hover:translate-x-1"
+              className="transition-transform duration-200"
             />
           </button>
         </div>
